@@ -13,7 +13,7 @@ if [ -n "$(grep TESTING=y $confFile)" ]; then
 	exit 0
 fi
 
-sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text nomodeset net.ifnames=0 biosdevname=0"' /etc/default/grub
+sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="quiet text nomodeset net.ifnames=0 biosdevname=0"' /etc/default/grub
 sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
