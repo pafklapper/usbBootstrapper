@@ -30,7 +30,7 @@ iface eth0 inet dhcp
 allow-hotplug eth1
 iface eth1 inet dhcp
 
-auto wlan0
+allow-hotplug wlan0
 iface wlan0 inet dhcp
 	wpa-ssid $WPASSID
 	wpa-psk $WPAPSK
