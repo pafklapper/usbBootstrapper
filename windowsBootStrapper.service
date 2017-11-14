@@ -1,0 +1,14 @@
+[Unit]
+Description=Windows Installer
+After=systemd-user-sessions.service getty-pre.target
+Before=getty.target
+[Service]
+Type=oneshot
+ExecStart=/srv/WindowsUsb
+StandardInput=tty
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+
+[Install]
+WantedBy=default.target
