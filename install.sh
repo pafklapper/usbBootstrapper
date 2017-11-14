@@ -15,7 +15,7 @@ fi
 
 source $confFile
 
-sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="rd.systemd.show_status=false loglevel=0 text nomodeset net.ifnames=0 biosdevname=0"' /etc/default/grub
+sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="rd.systemd.show_status=false rd.udev.log-priority=0 loglevel=0 text nomodeset net.ifnames=0 biosdevname=0"' /etc/default/grub
 sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
