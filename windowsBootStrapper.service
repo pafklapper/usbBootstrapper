@@ -4,7 +4,7 @@ After=systemd-user-sessions.service getty-pre.target
 Before=getty.target
 [Service]
 Type=oneshot
-ExecStart=/srv/WindowsUsb
+ExecStart=/srv/windowsUsbBootstrapper/main.sh
 StandardInput=tty
 TTYPath=/dev/tty1
 TTYReset=yes
