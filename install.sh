@@ -40,3 +40,4 @@ systemctl reenable networking.service
 ln -s $(dirname $(realpath "$0"))/windowsUsbBootstrapper.service /etc/systemd/system/windowsUsbBootstrapper.service
 systemctl enable windowsUsbBootstrapper.service
 systemctl disable getty@tty0.service
+#aa
