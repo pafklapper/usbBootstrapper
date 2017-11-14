@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # use this script to install the suite
 
 confFile=/etc/windowsUsbBootstrapper.config
