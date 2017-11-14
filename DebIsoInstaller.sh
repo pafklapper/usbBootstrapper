@@ -1,5 +1,5 @@
 #!/bin/bash
-# written by Stan Verschuuren
+# written by pafklapper
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 # semantic: download iso from server node, than xzcat it unto the laptops harddrive
 
