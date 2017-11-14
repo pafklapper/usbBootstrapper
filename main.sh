@@ -15,5 +15,5 @@ cat<<EOF
  * Installatieprogramma voor minilaptops op Siriusscholen
  * Geschreven door Stan Verschuuren
  * Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie
- EOF
+EOF
 
