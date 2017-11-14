@@ -1,13 +1,13 @@
 [Unit]
 Description=Windows Installer
-After=systemd-user-sessions.service getty-pre.target
-Before=getty.target
+After=getty.target
+Conflicts=getty@tty2.service
 
 [Service]
 Type=oneshot
 ExecStart=/srv/windowsUsbBootstrapper/main.sh
 StandardInput=tty
-TTYPath=/dev/tty1
+TTYPath=/dev/tty2
 TTYReset=yes
 TTYVHangup=yes
 
