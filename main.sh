@@ -3,5 +3,4 @@
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 
 # placeholder
-chvt 2
 clear && echo TADAA
