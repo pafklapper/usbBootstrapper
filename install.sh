@@ -1,9 +1,19 @@
 #!/bin/sh
 # use this script to install the suite
 
-source $(dirname "$0")/config
+confFile=/etc/windowsUsbBootstrapper.config
 
-sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text nomodeset net.ifnames=0 biosdevname=0"' /etc/default/grub
+if [ ! -f $confFile ]; then
+	cp $(dirname $0)/configTemplate $confFile
+fi
+
+if [ -n "$(grep TESTING=y $confFile)" ]; then
+	echo Edit config file first!
+	echo then remove/change TESTING=y
+	exit 0
+fi
+
+sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text nomodeset net.ifnames=0 biosdevname=0 jemoeder=1"' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # debian specific!
@@ -26,6 +36,6 @@ iface wlan0 inet dhcp
 EOF
 systemctl reenable networking.service
 
-ln -s $(dirname "$0")/main.sh /etc/systemd/system/windowsUsbBootstrapper.sh
+ln -s $(dirname "$0")/main.sh /etc/systemd/system/windowsUsbBootstrapper.service
 systemctl enable windowsUsbBootstrapper.service
 systemctl disable getty@tty0.service
