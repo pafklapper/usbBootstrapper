@@ -37,6 +37,6 @@ iface wlan0 inet dhcp
 EOF
 systemctl reenable networking.service
 
-ln -s $(realpath "$0")/main.sh /etc/systemd/system/windowsUsbBootstrapper.service
+ln -s $(dirname $(realpath "$0"))/main.sh /etc/systemd/system/windowsUsbBootstrapper.service
 systemctl enable windowsUsbBootstrapper.service
 systemctl disable getty@tty0.service
