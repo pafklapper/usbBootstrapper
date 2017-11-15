@@ -49,7 +49,7 @@ done
 isISODownloaded()
 {
  if [ -d $windowsISODirectory ] && [ -f $windowsISO ]; then
- echo fakka
+ echo fakkaDownlaod
  	return 0;
  else
  	return 1;
@@ -61,7 +61,7 @@ isISOUptodate()
 remoteISOChecksum="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
 
 if [ "$localISOChecksum" = "remoteISOChecksum" ]; then
-echo fakka
+echo fakkaCheck
 		return 0;
 	else
 		return 1;
