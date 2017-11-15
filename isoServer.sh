@@ -65,7 +65,7 @@ downloadISO()
 
 manageISO()
 {
-if isIsoDownloaded && isISOUptodate; then
+if isISODownloaded && isISOUptodate; then
 	logp info "Uptodate Windows ISO gevonden."
 	return 0
 else 
