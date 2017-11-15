@@ -23,8 +23,8 @@ blkid|grep ntfs|while read ntfsLine; do
 	ntfsBlk="$(echo $ntfsLine|cut -d: -f1)"
 	if [ -b $ntfsBlk ]; then
 		mkdir -p $windowsMountPoint
-		mount $ntfsBlk $windowsMountpoint
-		if -d $windowsMountPoint/Windows; then
+		mount $ntfsBlk $windowsMountPoint
+		if [ -d $windowsMountPoint/Windows ]; then
 			if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
 				return 0
 			else
@@ -100,6 +100,15 @@ if [ -n "$(dpkg -l | grep -i nginx)" ]; then
 
 	if [ $? -gt 0 ]; then 
 		logp fatal "NGINX kon niet worden geïnstalleerd!"
+	fi
+fi
+
+if [ -n "$(dpkg -l | grep -i ntfs-3g)" ]; then
+	logp info "Hardeschijf driver aan 't installeren..."
+	apt -y install ntfs-3g
+
+	if [ $? -gt 0 ]; then 
+		logp fatal "Hardeschijfdriver kon niet worden geïnstalleerd!"
 	fi
 fi
 
