@@ -10,6 +10,11 @@ cd $installationDirectory
 
 deviceName="$(dmidecode | grep -A3 '^System Information' | grep "Product Name" | cut -d: -f2)"
 
+if [ -n "$(echo $targetDevics | grep $deviceName)" ]; then
+	logp info "Device already enrolled!"
+	exit 0
+fi
+
 newTargetDevicesArray=$targetDevices
 newTargetDevicesArray+=($deviceName)
 
@@ -17,5 +22,7 @@ newTargetDevicesString="$(echo "targetDevices=("$(for dev in ${newTargetDevicesA
 
 sed -iE '/^targetDevices=/d' $confFile
 echo $newTargetDevicesString >> $confFile
+
+logp info "Succesfully enrolled device!"
 
 #sed -i "/^targetDevices=/c\ $newTargetDevicesString/" $confFile
