@@ -31,3 +31,5 @@ else
     echo "Diverged"
 fi
 }
+
+isGitRepoUptodate
