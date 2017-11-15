@@ -5,6 +5,8 @@ windowsMountPoint="/mnt/windows"
 windowsISODirectory="$windowsMountPoint/windowsUsbBootstrapper"
 windowsISO="$windowsISODirectory/WIN10.ISO.xz"
 
+localISOChecksum="$windowsISODirectory/WIN10.ISO.xz.sha256sum"
+
 nginxDefaultDirectory="/var/www/html"
 
 installationDirectory=/srv/windowsUsbBootstrapper
@@ -55,7 +57,13 @@ isISODownloaded()
 
 isISOUptodate()
 {
-	return 0
+remoteISOChecksum="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
+
+if [ "$localISOChecksum" = "remoteISOChecksum" ]; then
+		return 0;
+	else
+		return 1;
+	fi
 }
 
 downloadISO()
@@ -77,9 +85,10 @@ for i in {0..2}; do
 done
 
 logp info "Integriteitscontrole van de gedownloade schijf..."
-localWINISOCHECKSUM="$(sha256sum $windowsISO)";
+localISOChecksum="$(sha256sum $windowsISO)";
+echo $localISOChecksum > $windowsISOChecksum
 
-if [ "$localWINISOCHECKSUM" = "$WINISOCHECKSUM" ];then
+if [ "$localISOChecksum" = "$WINISOCHECKSUM" ];then
 	logp info "De windows schijf is gevalideerd!"
 else
 	rm -f $windowsISO
@@ -93,6 +102,7 @@ if isISODownloaded && isISOUptodate; then
 	logp info "Uptodate Windows ISO gevonden."
 	return 0
 else 
+logp fatal "je moeder"
 	if downloadISO; then
 		return 0
 	else
