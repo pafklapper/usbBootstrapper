@@ -2,8 +2,7 @@
 # written by pafklapper
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 
-installationDirectory=/srv/windowsUsbBootstrapper
-
+installationDirectory=/srv/windowsUsbBootstrapper cd $installationDirectory
 . $installationDirectory/globalFunctions
 . $installationDirectory/globalVariables
 . $confFile
