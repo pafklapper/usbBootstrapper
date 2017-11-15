@@ -12,15 +12,15 @@ cd $installationDirectory
 # wait for systemd to finish printing bootmessages
 sleep 2 && clear
 
-echo -e "\e[91m ___           _        _ _       _   _"
-echo -e "\e[91m|_ _|_ __  ___| |_ __ _| | | __ _| |_(_) ___ "
-echo -e "\e[91m | || '_ \/ __| __/ _\` | | |/ _\` | __| |/ _ \ "
-echo -e "\e[91m | || | | \__ \ || (_| | | | (_| | |_| |  __/"
-echo -e "\e[91m|___|_| |_|___/\__\__,_|_|_|\__,_|\__|_|\___|"
+echo -e "\e[33m ___           _        _ _       _   _"
+echo -e "\e[33m|_ _|_ __  ___| |_ __ _| | | __ _| |_(_) ___ "
+echo -e "\e[33m | || '_ \/ __| __/ _\` | | |/ _\` | __| |/ _ \ "
+echo -e "\e[33m | || | | \__ \ || (_| | | | (_| | |_| |  __/"
+echo -e "\e[33m|___|_| |_|___/\__\__,_|_|_|\__,_|\__|_|\___|"
 echo -e "\n"
-echo -e "\e[91m** Installatieprogramma voor minilaptops op Siriusscholen"
-echo -e "\e[91m** Geschreven door Stan Verschuuren"
-echo -e "\e[91m** Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie"
+echo -e "\e[33m** Installatieprogramma voor minilaptops op Siriusscholen"
+echo -e "\e[33m** Geschreven door Stan Verschuuren"
+echo -e "\e[33m** Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie\e[0m"
 
 logp beginsection
 logp info  "wachten op de netwerkverbinding... " && waitForNetwork
