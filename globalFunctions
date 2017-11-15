@@ -1,10 +1,35 @@
+logp()
+{
+case "$1" in
+	info)
+		echo -e "\e[32m\e[1m* \e[0m$2"
+	;;
+	warning)
+		echo -e "\033[31m\e[1m* \e[0m$2"
+	echo 
+	;;
+	fatal)
+		echo -e "\e[31mRed\e[1m* \e[101mLight$2"
+	;;
+	beginsection)
+		echo -e "\e[33m******************************************************"
+		echo -e "\e[33m||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+	;;
+	endsection)
+		echo -e "\e[33m||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+		echo -e "\e[33m******************************************************"
+	;;
+esac
+}
+
+
 waitForNetwork()
 {
 while :;
 do
 	timeout 5 ping -c1 8.8.8.8 1>/dev/null 2>/dev/null
 	if [ $? -eq 0 ]; then
-		echo "* Het netwerk is toegankelijk!"
+		logp info "* Het netwerk is toegankelijk!"
 		return 0
 	fi
 
@@ -17,34 +42,11 @@ isGitRepoUptodate()
 git fetch
 
 if git diff origin/master --quiet HEAD --; then
-	echo "* Installatie up-to-date."
+	logp info "* Installatie up-to-date."
 	return 0
 else
-	echo "* Installatie veroudert..."
+	logp warning "* Installatie veroudert..."
 	return 1
 fi
 }
 
-logp()
-{
-case "$1" in
-	info)
-		echo "\e[32m\e[1m* \e[0m$2"
-	;;
-	error)
-		echo "\033[31m\e[1m* \e[0m$2"
-	echo 
-	;;
-	fatal)
-		echo "\e[31mRed\e[1m* \e[101mLight$2"
-	;;
-	beginsection)
-		echo "\e[33m******************************************************"
-		echo "\e[33m||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-	;;
-	endsection)
-		echo "\e[33m||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-		echo "\e[33m******************************************************"
-	;;
-esac
-}

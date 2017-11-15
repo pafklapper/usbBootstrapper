@@ -24,6 +24,7 @@ cat<<EOF
 ** Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie
 EOF
 
+logp beginsection
 logp info  "* wachten op de netwerkverbinding... " && waitForNetwork
 
 # selfupdate
