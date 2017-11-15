@@ -20,7 +20,7 @@ sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # debian specific!
-apt -y install curl wget wpasupplicant xz-utils pv
+apt -y install curl wget wpasupplicant xz-utils pv dmidecode
 
 cat<<EOF>/etc/network/interfaces
 auto lo

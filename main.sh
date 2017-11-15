@@ -22,6 +22,20 @@ echo -e "\e[91m** Installatieprogramma voor minilaptops op Siriusscholen"
 echo -e "\e[91m** Geschreven door Stan Verschuuren"
 echo -e "\e[91m** Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie\e[0m"
 
+isHostTargetDevice()
+{
+	sysInfo="$(dmidecode | grep -A3 '^System Information')"
+
+	for device in ${targetDevices[@]}; do 
+		if [ -n "$(echo "$sysInfo" | grep "$device")" ]
+			return 0
+		fi
+	done
+	return 1
+}
+
+main()
+{
 logp beginsection
 logp info  "wachten op de netwerkverbinding... " && waitForNetwork
 
@@ -36,5 +50,27 @@ if ! isGitRepoUptodate; then
 	fi
 fi
 
-logp info "joepie alles flex"
+local isError
+if isHostTargetDevice; then
+	logp info "Dit apparaat zal van de Windows installatie voorzien worden!"
+	$installationDirectory/isoInstaller.sh
+	isError=$?
+else
+	logp info "Dit apparaat zal de installatieschijf hosten!"
+	$installationDirectory/isoServer.sh
+	isError=$?
+fi
+
 logp endsection
+if [ $isError -eq 0 ]; then
+	logp info "Installatie voltooid! De computer start in tien seconden opnieuw op!"
+	sleep 10 && reboot
+else
+	logp fatal "De installatie is mislukt! :("
+	logp fatal "Druk op een knop om de computer opnieuw op te starten..."
+	read && sleep 1 && reboot
+fi
+logp endsection
+}
+
+main $@
