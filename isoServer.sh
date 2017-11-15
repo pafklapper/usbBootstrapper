@@ -10,7 +10,7 @@ mountWindowsHarddisk()
 {
 blkid|grep ntfs|while read ntfsLine; do
 	ntfsBlk="$(echo $ntfsLine|cut -d: -f1)"
-	if -b $ntfsBlk; then
+	if [ -b $ntfsBlk ]; then
 		mkdir -p $windowsMountPoint
 		mount $ntfsBlk $windowsMountpoint
 		if -d $windowsMountPoint/Windows; then
@@ -32,7 +32,7 @@ done
 
 isISODownloaded()
 {
- if -d $windowsISODirectory && -f $windowsISO; then
+ if [ -d $windowsISODirectory ] && [ -f $windowsISO ]; then
  	return 0;
  else
  	return 1;
@@ -74,7 +74,7 @@ serveISO()
 }
 
 function finish {
-	if -L $nginxDefaultDirectory; then
+	if [ -L $nginxDefaultDirectory ]; then
 		rm -f $nginxDefaultDirectory
 		mkdir $nginxDefaultDirectory && chown http:http $nginxDefaultDirectory
 	fi
@@ -83,7 +83,7 @@ trap finish EXIT
 
 main()
 {
-if [ -n "$(dpkg -l | grep -i nginx)" ]
+if [ -n "$(dpkg -l | grep -i nginx)" ]; then
 	logp info "NGINX aan 't installeren..."
 	apt -y install nginx
 
@@ -93,7 +93,7 @@ if [ -n "$(dpkg -l | grep -i nginx)" ]
 fi
 
 logp info  "Klaarmaken NGINX..."
-if ! -d $nginxDefaultDirectory; then
+if [ ! -d $nginxDefaultDirectory ]; then
 		logp fatal "NGINX standaardfolder is niet aanwezig!"
 	else
 		rm -rf $nginxDefaultDirectory
