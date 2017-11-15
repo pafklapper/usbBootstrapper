@@ -2,6 +2,10 @@
 # written by pafklapper
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 
+source globalFunctions
+source globalVariables
+source $confFile
+
 # wait for systemd to finish printing bootmessages
 sleep 2 && clear
 
@@ -12,8 +16,12 @@ cat<<EOF
   | || | | \__ \ || (_| | | | (_| | |_| |  __/
  |___|_| |_|___/\__\__,_|_|_|\__,_|\__|_|\___|
  
- * Installatieprogramma voor minilaptops op Siriusscholen
- * Geschreven door Stan Verschuuren
- * Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie
+ ** Installatieprogramma voor minilaptops op Siriusscholen
+ ** Geschreven door Stan Verschuuren
+ ** Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie
 EOF
+
+echo "* waiting for network... " && waitForNetwork
+
+# selfupdate
 
