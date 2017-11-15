@@ -67,8 +67,6 @@ if [ $isError -eq 0 ]; then
 	sleep 10 && reboot
 else
 	logp fatal "De installatie is mislukt! :("
-	logp fatal "Druk op een knop om de computer opnieuw op te starten..."
-	read && sleep 1 && reboot
 fi
 logp endsection
 }

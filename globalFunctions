@@ -10,6 +10,8 @@ case "$1" in
 	;;
 	fatal)
 		echo -e "\e[31m\e[1m* \e[0m\e[30m\e[101m$2"
+		echo -e "\e[31m\e[1m* \e[0m\e[30m\e[101mDruk een toets om opnieuw op te starten..."
+		read && reboot
 	;;
 	beginsection)
 		echo -e "\e[33m**********************************************"
