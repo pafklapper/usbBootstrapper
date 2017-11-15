@@ -42,6 +42,7 @@ logp info  "wachten op de netwerkverbinding... " && waitForNetwork
 # selfupdate
 if ! isGitRepoUptodate; then
 	logp info "Updates installeren. Dit kan even duren..."
+	apt update && apt upgrade -y
 	( cd $installationDirectory && git pull )
 	$installationDirectory/install.sh
 	if [ $? -eq 0 ]; then

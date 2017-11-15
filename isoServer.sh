@@ -120,15 +120,9 @@ serveISO()
 	localIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
 
 	logp info "Het systeem is actief op $localIP!"
+	logp warning "Gebruik de stroomknop op de pc om het systeem af te sluiten!"
 
-	while :; do
-		logp warning "Druk spatie en dan enter om het systeem af te sluiten!\ "
-		read input
-
-		if [ "$input" = ' ' ]; then
-			break
-		fi
-	done
+	while :; do sleep 1; done
 }
 
 finish(){
