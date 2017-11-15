@@ -14,7 +14,9 @@ done
 
 isGitRepoUptodate()
 {
-if git diff-index origin/master --quiet HEAD --; then
+git fetch
+
+if git diff origin/master --quiet HEAD --; then
 	echo "* Installatie up-to-date."
 	return 0
 else
