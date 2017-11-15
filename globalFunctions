@@ -14,27 +14,11 @@ done
 
 isGitRepoUptodate()
 {
-UPSTREAM=${1:-'@{u}'}
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse "$UPSTREAM")
-BASE=$(git merge-base @ "$UPSTREAM")
-
-if [ "$LOCAL" = "$REMOTE" ]; then
-	echo "* Installatie up-to-date"
+if git diff-index --quiet HEAD --; then
+	echo "* Installatie up-to-date."
 	return 0
-elif [ "$LOCAL" = "$BASE" ]; then
+else
 	echo "* Installatie veroudert..."
 	return 1
-elif [ "$REMOTE" = "$BASE" ]; then
-    echo "Need to push"
-else
-    echo "Diverged"
 fi
 }
-
-if git diff-index --quiet HEAD --; then
-    echo no changes
-
-else
-    echo canges
-fi
