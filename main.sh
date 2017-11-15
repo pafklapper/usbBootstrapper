@@ -2,9 +2,9 @@
 # written by pafklapper
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 
-source globalFunctions
-source globalVariables
-source $confFile
+. globalFunctions
+. globalVariables
+. $confFile
 
 # wait for systemd to finish printing bootmessages
 sleep 2 && clear
@@ -28,7 +28,7 @@ if ! isGitRepoUptodate; then
 	echo "* Updates installeren. Dit kan even duren..."
 	( cd $installationDirectory && git pull )
 	$installationDirectory/install.sh
-	if [ $? -eq 0 ]
+	if [ $? -eq 0 ]; then
 		echo "* Installeren van updates gelukt. De computer start in vijf seconden opnieuw op!"
 		sleep 5 && reboot
 	fi
