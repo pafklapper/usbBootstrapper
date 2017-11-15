@@ -5,7 +5,7 @@ windowsMountPoint="/mnt/windows"
 windowsISODirectory="$windowsMountPoint/windowsUsbBootstrapper"
 windowsISO="$windowsISODirectory/WIN10.ISO.xz"
 
-localISOChecksum="$windowsISODirectory/WIN10.ISO.xz.sha256sum"
+localISOChecksum="$windowsISODirectory/WIN10.ISO.xz.sha256"
 
 nginxDefaultDirectory="/var/www/html"
 
@@ -60,7 +60,7 @@ isISOUptodate()
 {
 remoteISOChecksum="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
 
-if [ "$localISOChecksum" = "remoteISOChecksum" ]; then
+if [ "$(cat $localISOChecksum)" = "remoteISOChecksum" ]; then
 echo fakkaCheck
 		return 0;
 	else
