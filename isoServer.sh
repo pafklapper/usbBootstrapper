@@ -24,10 +24,9 @@ blkid|grep ntfs|while read ntfsLine; do
 	if [ -b $ntfsBlk ]; then
 		mkdir -p $windowsMountPoint
 		mount $ntfsBlk $windowsMountPoint
-		logp warning "veeee"
+
 		if [ -d $windowsMountPoint/Windows ]; then
 			if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
-			logp fatal "je moeder"
 				return 0
 			else
 				logp fatal "Deze computer heeft niet genoeg ruimte om de Windows schijf te kunnen hosten. Probeer een andere computer!"
@@ -39,7 +38,10 @@ blkid|grep ntfs|while read ntfsLine; do
 		logp fatal "NTFS blok herkenning mislukt!"
 	fi
 done
-	return 1
+
+	if [ ! -d $windowsMountPoint/Windows ]; then
+		return 1
+	fi
 }
 
 isISODownloaded()
