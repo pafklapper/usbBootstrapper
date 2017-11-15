@@ -89,6 +89,8 @@ finish(){
 		rm -f $nginxDefaultDirectory
 	fi
 	mkdir $nginxDefaultDirectory
+
+	umount -f $windowsMountPoint
 }
 trap finish EXIT
 
