@@ -2,8 +2,10 @@
 # written by pafklapper
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 
-. globalFunctions
-. globalVariables
+installationDirectory=/srv/windowsUsbBootstrapper
+
+. $installationDirectory/globalFunctions
+. $installationDirectory/globalVariables
 . $confFile
 
 # wait for systemd to finish printing bootmessages
