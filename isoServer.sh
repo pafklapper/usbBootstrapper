@@ -89,10 +89,15 @@ logp info "Integriteitscontrole van de gedownloade schijf..."
 ISOChecksum="$(sha256sum $windowsISO)";
 echo $ISOChecksum > $localISOChecksum
 
+echo local=$ISOChecksum
+echo remote=$remoteIsoChecksum
+echo "$ISOChecksum" = "$remoteIsoChecksum"
+read
+
 if [ "$ISOChecksum" = "$remoteIsoChecksum" ];then
 	logp info "De windows schijf is gevalideerd!"
 else
-	rm -f $windowsISO
+	rm -f $windowsISO; rm -f $localIsoChecksum
 	logp fatal "De gedownloade schijf is corrupt!"
 fi
 }
