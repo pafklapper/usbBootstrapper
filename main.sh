@@ -24,4 +24,4 @@ EOF
 echo "* waiting for network... " && waitForNetwork
 
 # selfupdate
-
+git status -uno
