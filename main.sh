@@ -37,4 +37,4 @@ if ! isGitRepoUptodate; then
 	fi
 fi
 
-echo joepie alles flex
+#echo joepie alles flex
