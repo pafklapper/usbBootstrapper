@@ -24,17 +24,17 @@ cat<<EOF
 ** Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie
 EOF
 
-echo "* wachten op de netwerkverbinding... " && waitForNetwork
+logp info  "* wachten op de netwerkverbinding... " && waitForNetwork
 
 # selfupdate
 if ! isGitRepoUptodate; then
-	echo "* Updates installeren. Dit kan even duren..."
+	logp info "* Updates installeren. Dit kan even duren..."
 	( cd $installationDirectory && git pull )
 	$installationDirectory/install.sh
 	if [ $? -eq 0 ]; then
-		echo "* Installeren van updates gelukt. De computer start in vijf seconden opnieuw op!"
+		logp info "* Installeren van updates gelukt. De computer start in vijf seconden opnieuw op!"
 		sleep 5 && reboot
 	fi
 fi
 
-echo joepie alles flex
+logp info "joepie alles flex"
