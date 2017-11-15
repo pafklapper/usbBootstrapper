@@ -96,7 +96,7 @@ main()
 {
 if [ -z "$(dpkg -l | grep -i nginx)" ]; then
 	logp info "NGINX aan 't installeren..."
-	apt -y install nginx
+	apt update && apt -y install nginx
 
 	if [ $? -gt 0 ]; then 
 		logp fatal "NGINX kon niet worden geïnstalleerd!"
@@ -105,7 +105,7 @@ fi
 
 if [ -z "$(dpkg -l | grep -i ntfs-3g)" ]; then
 	logp info "Hardeschijf driver aan 't installeren..."
-	apt -y install ntfs-3g
+	apt update && apt -y install ntfs-3g
 
 	if [ $? -gt 0 ]; then 
 		logp fatal "Hardeschijfdriver kon niet worden geïnstalleerd!"
@@ -130,7 +130,8 @@ if mountWindowsHarddisk; then
 	else
 		logp fatal "ISO kon niet worden klaargezet!"
 	fi
-
+else
+	logp fatal "Windows partitie kon niet worden geopend!"
 fi
 }
 
