@@ -85,6 +85,8 @@ serveISO()
 	if [ $? -gt 0 ]; then
 		logp fatal "NGINX kon niet worden gestart!"
 	fi
+
+	sleep 100
 }
 
 finish(){
