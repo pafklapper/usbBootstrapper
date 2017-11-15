@@ -1,1 +1,2 @@
 confFile=/etc/windowsUsbBootstrapper.config
+installationDirectory=/srv/windowsUsbBootstrapper

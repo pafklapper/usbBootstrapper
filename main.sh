@@ -24,4 +24,12 @@ EOF
 echo "* waiting for network... " && waitForNetwork
 
 # selfupdate
-git status -uno
+if ! isGitRepoUptodate; then
+	echo "* Updates installeren. Dit kan even duren..."
+	( cd $installationDirectory && git pull )
+	$installationDirectory/install.sh
+	if [ $? -eq 0 ]
+		echo "* Installeren van updates gelukt. De computer start in vijf seconden opnieuw op!"
+		sleep 5 && reboot
+	fi
+fi
