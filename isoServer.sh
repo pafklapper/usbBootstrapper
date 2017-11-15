@@ -24,6 +24,7 @@ blkid|grep ntfs|while read ntfsLine; do
 	if [ -b $ntfsBlk ]; then
 		mkdir -p $windowsMountPoint
 		mount $ntfsBlk $windowsMountPoint
+		logp warning "veeee"
 		if [ -d $windowsMountPoint/Windows ]; then
 			if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
 				return 0
@@ -32,9 +33,7 @@ blkid|grep ntfs|while read ntfsLine; do
 			fi
 		else
 			umount $windowsMountPoint
-			logp warning "Veeeeeeeeeeeeeeeeeeeeee"
 		fi
-
 	else
 		logp fatal "NTFS blok herkenning mislukt!"
 	fi
