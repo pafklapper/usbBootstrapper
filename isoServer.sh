@@ -60,7 +60,11 @@ isISOUptodate()
 {
 remoteISOChecksum="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
 
-if [ "$(cat $localISOChecksum)" = "remoteISOChecksum" ]; then
+echo remote="$remoteISOChecksum"
+echo local="$(cat $localISOChecksum)"
+exit 0
+
+if [ "$(cat $localISOChecksum)" = "$remoteISOChecksum" ]; then
 echo fakkaCheck
 		return 0;
 	else
