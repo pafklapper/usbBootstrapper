@@ -77,6 +77,7 @@ for i in {0..2}; do
 	wget $WINISOURL -q -O - | pv --size $WINISOSIZE |  dd of=$windowsISO
 	if [ $? -eq 0 ]; then
 		logp info "De windows schijf is succesvol gedownload!"
+		sync
 		break
 	else
 		rm -f $windowsISO
