@@ -66,7 +66,7 @@ WINISOCHECKSUM="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
 
 
 logp info "Het systeem zal nu de geprepareerde Windows schijf downloaden..."
-for i in (0..2); do
+for i in {0..2}; do
 	wget $WINISOURL -q -O - | pv --size $WINISOSIZE $ |  dd of=$windowsISO
 	if [ $? -eq 0]; then
 		logp info "De windows schijf is succesvol gedownload!"
