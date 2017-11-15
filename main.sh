@@ -36,3 +36,5 @@ if ! isGitRepoUptodate; then
 		sleep 5 && reboot
 	fi
 fi
+
+echo joepie alles flex

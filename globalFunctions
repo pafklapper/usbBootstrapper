@@ -20,10 +20,10 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ "$LOCAL" = "$REMOTE" ]; then
-    echo "Up-to-date"
+#    echo "Up-to-date"
 	return 0
 elif [ "$LOCAL" = "$BASE" ]; then
-    echo "Need to pull"
+#    echo "Need to pull"
 	echo "* Installatie veroudert..."
 	return 1
 elif [ "$REMOTE" = "$BASE" ]; then
