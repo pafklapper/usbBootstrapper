@@ -45,6 +45,7 @@ if ! isGitRepoUptodate; then
 	( cd $installationDirectory && git pull )
 	$installationDirectory/install.sh
 	if [ $? -eq 0 ]; then
+		logp endsection
 		logp info "Installeren van updates gelukt. De computer start in vijf seconden opnieuw op!"
 		sleep 5 && reboot
 	fi
