@@ -61,14 +61,10 @@ else
 	isError=$?
 fi
 
-logp endsection
-if [ $isError -eq 0 ]; then
-	logp info "Installatie voltooid! De computer start in tien seconden opnieuw op!"
-	sleep 10 && reboot
-else
-	logp fatal "De installatie is mislukt! :("
+if [ $isError -gt 0 ]; then
+	logp endsection
+	logp fatal "Er is iets verschrikkelijk fout gegaan! :("
 fi
-logp endsection
 }
 
 main $@

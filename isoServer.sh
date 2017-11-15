@@ -175,7 +175,13 @@ if mountWindowsHarddisk; then
 
 	if manageISO; then
 		logp info "Klaar om ISO te hosten. Bezig met opstarten NGINX..."
-		serveISO
+		if serveISO; then
+			logp endsection
+			logp info "Het systeem zal nu worden afgesloten..."
+			sleep 3 && shutdown
+		else
+			return 1
+		fi
 	else
 		logp fatal "ISO kon niet worden klaargezet!"
 	fi
