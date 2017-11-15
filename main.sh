@@ -24,7 +24,7 @@ cat<<EOF
  ** Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie
 EOF
 
-echo "* waiting for network... " && waitForNetwork
+echo "* wachten op de netwerkverbinding... " && waitForNetwork
 
 # selfupdate
 if ! isGitRepoUptodate; then
@@ -37,4 +37,4 @@ if ! isGitRepoUptodate; then
 	fi
 fi
 
-#echo joepie alles flex
+echo joepie alles flex
