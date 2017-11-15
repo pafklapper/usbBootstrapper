@@ -27,6 +27,7 @@ blkid|grep ntfs|while read ntfsLine; do
 		logp warning "veeee"
 		if [ -d $windowsMountPoint/Windows ]; then
 			if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
+			logp fatal "je moeder"
 				return 0
 			else
 				logp fatal "Deze computer heeft niet genoeg ruimte om de Windows schijf te kunnen hosten. Probeer een andere computer!"
