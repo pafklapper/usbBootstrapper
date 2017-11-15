@@ -69,12 +69,12 @@ if [ "$(cat $localISOChecksum)" = "$remoteISOChecksum" ]; then
 downloadISO()
 {
 mkdir  -p $windowsISODirectory
-WINISOSIZE="$(curl $WINISOSIZEURL 2>/dev/null)"
-WINISOCHECKSUM="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
+remoteIsoSize="$(curl $WINISOSIZEURL 2>/dev/null)"
+remoteIsoChecksum="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
 
 logp info "Het systeem zal nu de geprepareerde Windows schijf downloaden..."
 for i in {0..2}; do
-	wget $WINISOURL -q -O - | pv --size $WINISOSIZE |  dd of=$windowsISO
+	wget $WINISOURL -q -O - | pv --size $remoteIsoSize |  dd of=$windowsISO
 	if [ $? -eq 0 ]; then
 		logp info "De windows schijf is succesvol gedownload!"
 		sync
@@ -86,10 +86,10 @@ for i in {0..2}; do
 done
 
 logp info "Integriteitscontrole van de gedownloade schijf..."
-localISOChecksum="$(sha256sum $windowsISO)";
-echo $localISOChecksum > $windowsISOChecksum
+ISOChecksum="$(sha256sum $windowsISO)";
+echo $ISOChecksum > $localISOChecksum
 
-if [ "$localISOChecksum" = "$WINISOCHECKSUM" ];then
+if [ "$ISOChecksum" = "$remoteIsoChecksum" ];then
 	logp info "De windows schijf is gevalideerd!"
 else
 	rm -f $windowsISO
