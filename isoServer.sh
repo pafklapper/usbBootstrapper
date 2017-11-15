@@ -86,7 +86,7 @@ for i in {0..2}; do
 done
 
 logp info "Integriteitscontrole van de gedownloade schijf..."
-ISOChecksum="$(sha256sum $windowsISO)";
+ISOChecksum="$(sha256sum $windowsISO | cut -f1 -d\ )";
 echo $ISOChecksum > $localISOChecksum
 
 echo local=$ISOChecksum
