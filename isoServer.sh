@@ -5,9 +5,6 @@ windowsMountPoint="/mnt/windows"
 windowsISODirectory="$windowsMountPoint/windowsUsbBootstrapper"
 windowsISO="$windowsISODirectory/WIN10.ISO.xz"
 
-echo $windowsISO
-exit 
-
 nginxDefaultDirectory="/var/www/html"
 
 installationDirectory=/srv/windowsUsbBootstrapper
