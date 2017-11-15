@@ -125,7 +125,7 @@ serveISO()
 		logp warning "Druk spatie en dan enter om het systeem af te sluiten!"
 		read input
 
-		if [ "$input" = " " ]; then
+		if [ "$input" = ' ' ]; then
 			break
 		fi
 	done
