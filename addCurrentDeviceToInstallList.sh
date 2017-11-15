@@ -15,7 +15,7 @@ newTargetDevicesArray+=($deviceName)
 
 newTargetDevicesString="$(echo "targetDevices=("$(for dev in ${newTargetDevicesArray[@]}; do printf \""$dev"\"; printf ' ';done)")")"
 
-sed -E '/^targetDevices/d' $confFile
+sed -iE '/^targetDevices=/d' $confFile
 echo $newTargetDevicesString >> $confFile
 
 #sed -i "/^targetDevices=/c\ $newTargetDevicesString/" $confFile
