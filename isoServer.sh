@@ -64,10 +64,6 @@ mkdir  -p $windowsISODirectory
 WINISOSIZE="$(curl $WINISOSIZEURL 2>/dev/null)"
 WINISOCHECKSUM="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
 
-echo size=$WINISOSIZE
-echo cksm=$WINISOCHECKSUM
-exit 0
-
 logp info "Het systeem zal nu de geprepareerde Windows schijf downloaden..."
 for i in {0..2}; do
 	wget $WINISOURL -q -O - | pv --size $WINISOSIZE $ |  dd of=$windowsISO
