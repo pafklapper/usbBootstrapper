@@ -32,4 +32,9 @@ else
 fi
 }
 
-isGitRepoUptodate
+if git diff-index --quiet HEAD --; then
+    echo no changes
+
+else
+    echo canges
+fi
