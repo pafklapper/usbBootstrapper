@@ -27,7 +27,7 @@ isHostTargetDevice()
 	sysInfo="$(dmidecode | grep -A3 '^System Information')"
 
 	for device in ${targetDevices[@]}; do 
-		if [ -n "$(echo "$sysInfo" | grep "$device")" ]
+		if [ -n "$(echo "$sysInfo" | grep "$device")" ];then
 			return 0
 		fi
 	done
