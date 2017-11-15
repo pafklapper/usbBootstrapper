@@ -84,11 +84,11 @@ serveISO()
 	fi
 }
 
-function finish {
+finish(){
 	if [ -L $nginxDefaultDirectory ]; then
 		rm -f $nginxDefaultDirectory
-		mkdir $nginxDefaultDirectory && chown http:http $nginxDefaultDirectory
 	fi
+	mkdir $nginxDefaultDirectory && chown http:http $nginxDefaultDirectory
 }
 trap finish EXIT
 
