@@ -63,7 +63,32 @@ isISOUptodate()
 
 downloadISO()
 {
- return 0
+mkdir  -p $windowsISODirectory
+WINISOSIZE="$(curl $WINISOSIZEURL 2>/dev/null)"
+WINISOCHECKSUM="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
+
+
+logp info "Het systeem zal nu de geprepareerde Windows schijf downloaden..."
+for i in (0..2); do
+	wget $WINISOURL -q -O - | pv --size $WINISOSIZE $ |  dd of=$windowsISO
+	if [ $? -eq 0]; then
+		logp info "De windows schijf is succesvol gedownload!"
+		break
+	else
+		rm -f $windowsISO
+		logp warning "Downloaden mislukt! Poging $i"
+	fi
+done
+
+logp info "Integriteitscontrole van de gedownloade schijf..."
+localWINISOCHECKSUM="$(sha256sum $windowsISO)";
+
+if [ "$localWINISOCHECKSUM" = "$WINISOCHECKSUM" ];then
+	logp info "De windows schijf is gevalideerd!"
+else
+	rm -f $windowsISO
+	logp fatal "De gedownloade schijf is corrupt!"
+fi
 }
 
 manageISO()
@@ -72,9 +97,7 @@ if isISODownloaded && isISOUptodate; then
 	logp info "Uptodate Windows ISO gevonden."
 	return 0
 else 
-	logp info "Windows ISO zal worden gedownload..."
 	if downloadISO; then
-		logp info "Windows ISO succesvol gedownload."
 		return 0
 	else
 		logp fatal "Windows ISO kon niet worden gedownload!"
