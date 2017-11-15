@@ -49,7 +49,6 @@ done
 isISODownloaded()
 {
  if [ -d $windowsISODirectory ] && [ -f $windowsISO ]; then
- echo fakkaDownlaod
  	return 0;
  else
  	return 1;
@@ -60,12 +59,7 @@ isISOUptodate()
 {
 remoteISOChecksum="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
 
-echo remote="$remoteISOChecksum"
-echo local="$(cat $localISOChecksum)"
-exit 0
-
 if [ "$(cat $localISOChecksum)" = "$remoteISOChecksum" ]; then
-echo fakkaCheck
 		return 0;
 	else
 		return 1;
@@ -108,7 +102,6 @@ if isISODownloaded && isISOUptodate; then
 	logp info "Uptodate Windows ISO gevonden."
 	return 0
 else 
-logp fatal "je moeder"
 	if downloadISO; then
 		return 0
 	else
