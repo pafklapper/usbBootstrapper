@@ -29,7 +29,7 @@ while :;
 do
 	timeout 5 ping -c1 8.8.8.8 1>/dev/null 2>/dev/null
 	if [ $? -eq 0 ]; then
-		logp info "* Het netwerk is toegankelijk!"
+		logp info "Het netwerk is toegankelijk!"
 		return 0
 	fi
 
@@ -42,10 +42,10 @@ isGitRepoUptodate()
 git fetch
 
 if git diff origin/master --quiet HEAD --; then
-	logp info "* Installatie up-to-date."
+	logp info "Installatie up-to-date."
 	return 0
 else
-	logp warning "* Installatie veroudert..."
+	logp warning "Installatie veroudert..."
 	return 1
 fi
 }
