@@ -32,6 +32,7 @@ blkid|grep ntfs|while read ntfsLine; do
 			fi
 		else
 			umount $windowsMountPoint
+			logp warning "Veeeeeeeeeeeeeeeeeeeeee"
 		fi
 
 	else
