@@ -88,13 +88,13 @@ finish(){
 	if [ -L $nginxDefaultDirectory ]; then
 		rm -f $nginxDefaultDirectory
 	fi
-	mkdir $nginxDefaultDirectory && chown http:http $nginxDefaultDirectory
+	mkdir $nginxDefaultDirectory
 }
 trap finish EXIT
 
 main()
 {
-if [ -n "$(dpkg -l | grep -i nginx)" ]; then
+if [ -z "$(dpkg -l | grep -i nginx)" ]; then
 	logp info "NGINX aan 't installeren..."
 	apt -y install nginx
 
@@ -103,7 +103,7 @@ if [ -n "$(dpkg -l | grep -i nginx)" ]; then
 	fi
 fi
 
-if [ -n "$(dpkg -l | grep -i ntfs-3g)" ]; then
+if [ -z "$(dpkg -l | grep -i ntfs-3g)" ]; then
 	logp info "Hardeschijf driver aan 't installeren..."
 	apt -y install ntfs-3g
 
