@@ -117,7 +117,18 @@ serveISO()
 		logp fatal "NGINX kon niet worden gestart!"
 	fi
 
-	sleep 100
+	localIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
+
+	logp info "Het systeem is actief op $localIP!"
+
+	while :; do
+		logp warning "Druk spatie en dan enter om het systeem af te sluiten!\n"
+		read input
+
+		if [ "$input" = " " ]; then
+			break
+		fi
+	done
 }
 
 finish(){
