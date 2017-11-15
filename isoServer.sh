@@ -134,7 +134,7 @@ finish(){
 
 	umount -f $windowsMountPoint
 }
-trap finish EXIT
+trap finish INT TERM EXIT
 
 main()
 {
