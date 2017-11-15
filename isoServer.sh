@@ -1,10 +1,21 @@
 #!/bin/bash
 
+
 windowsMountPoint="/mnt/windows"
 windowsISODirectory="$windowsMountPoint/windowsUsbBootstrapper"
 windowsISO="$windowsISODirectory/WIN10.ISO.xz"
 
 nginxDefaultDirectory="/var/www/html"
+
+installationDirectory=/srv/windowsUsbBootstrapper
+cd $installationDirectory
+
+. $installationDirectory/globalFunctions
+. $installationDirectory/globalVariables
+. $confFile
+
+
+
 
 mountWindowsHarddisk()
 {
