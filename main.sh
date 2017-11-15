@@ -39,3 +39,4 @@ if ! isGitRepoUptodate; then
 fi
 
 logp info "joepie alles flex"
+logp endsection
