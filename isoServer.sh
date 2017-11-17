@@ -177,7 +177,7 @@ if mountWindowsHarddisk; then
 	
 	if systemctl start nginx; then
 		echo WAIT > $localIsoHostStatusUrl
-		logp info "De webserver is online!"
+		logp info "De lokale webserver is online!"
 	fi
 
 
