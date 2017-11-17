@@ -27,6 +27,7 @@ esac
 
 waitForNetwork()
 {
+echo TESTTTTTINGGGGG && sleep 5 && return 0
 while :;
 do
 	timeout 5 ping -c1 8.8.8.8 1>/dev/null 2>/dev/null
