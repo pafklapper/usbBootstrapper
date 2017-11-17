@@ -102,12 +102,12 @@ else
 				fi
 			;;
 			wait)
-			logp info "De host $remoteIsoHost is nog aan het opwarmen. Een moment geduld."
+			logp info "De externe host $remoteIsoHost is nog aan het opwarmen. Een moment geduld."
 			sleep 60
 			;;
 		esac
 		else
-			logp fatal "De host $remoteIsoHost is offline! "
+			logp fatal "De externe host $remoteIsoHost is offline! "
 		fi
 
 			done
@@ -119,7 +119,7 @@ serveIso()
 	echo OK > $localIsoHostStatusUrl
 
 	if ! systemctl is-active nginx; then
-		logp fatal "De webserver is niet online!"
+		logp fatal "De lokale webserver is niet online!"
 	fi
 
 	localIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
