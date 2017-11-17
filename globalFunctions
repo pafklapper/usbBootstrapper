@@ -42,6 +42,7 @@ done
 
 isHostUp()
 {
+echo $remoteIsoHostStatusUrl && read
 if curl -sSf $remoteIsoHostStatusUrl> /dev/null; then
 	return 0
 else
