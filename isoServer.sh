@@ -86,7 +86,7 @@ for i in {0..2}; do
 	fi
 done
 
-if validateIso;then
+if isIsoValid;then
 	logp info "De windows schijf is gevalideerd!"
 else
 	rm -f $localIsoFile; rm -f $localIsoChecksum
@@ -94,9 +94,9 @@ else
 fi
 }
 
-manageIso()
+acquireIso()
 {
-if isIsoDownloaded && isIsoUptodate; then
+if isIsoDownloaded && isIsoUptodate && isIsoValid; then
 	logp info "Uptodate Windows ISO gevonden."
 	return 0
 else
@@ -200,7 +200,7 @@ if mountWindowsHarddisk; then
 	fi
 
 
-	if manageIso; then
+	if acquireIso; then
 		logp info "Klaar om ISO te hosten. Bezig met opstarten webserver..."
 		if serveIso; then
 			logp endsection
