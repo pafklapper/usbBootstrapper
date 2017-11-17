@@ -142,7 +142,7 @@ serveIso()
 	logp warning "Gebruik de stroomknop op de pc om het systeem af te sluiten!"
 
 	while :; do
-		if [ "$(read)"= "stop" ]; then
+		if [ "$(read)" = "stop" ]; then
 			exit 1
 		fi
 		sleep 1
