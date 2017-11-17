@@ -75,4 +75,4 @@ if [ $isError -gt 0 ]; then
 fi
 }
 
-tee -a $logFile | main $@ | sed "s/\x1B\[\([0-9]\{1,2\}\(;[0-9]\{1,2\}\)\?\)\?[mGK]//g" | tee -a $logFile
+tee -a $logFile | main $@ | tee -a $logFile
