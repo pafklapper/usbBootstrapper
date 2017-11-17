@@ -56,7 +56,7 @@ if [ "$(cat $localIsoChecksumFile)" = "$remoteIsoChecksum" ]; then
 
 downloadIso()
 {
-mkdir  -p $windowsIsoDirectory
+mkdir  -p $localIsoDirectory
 remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
 remoteIsoChecksum="$(curl $remoteIsoChecksumUrl 2>/dev/null)"
 
@@ -173,7 +173,7 @@ fi
 if mountWindowsHarddisk; then
 	logp info "Windows installatie gevonden."
 
-	mkdir  -p $windowsIsoDirectory && ln -s $windowsIsoDirectory $nginxDefaultDirectory || logp fatal "Kon de lokale hostfolder niet aanmaken!"
+	mkdir  -p $localIsoDirectory && ln -s $localIsoDirectory $nginxDefaultDirectory || logp fatal "Kon de lokale hostfolder niet aanmaken!"
 	
 	if systemctl start nginx; then
 		echo WAIT > $localIsoHostStatusUrl
