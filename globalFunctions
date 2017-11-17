@@ -42,8 +42,7 @@ done
 
 isHostUp()
 {
-echo $remoteIsoHostStatusUrl && read
-if curl -sSf $remoteIsoHostStatusUrl> /dev/null; then
+if timeout 5 curl -sSf $remoteIsoHostStatusUrl> /dev/null; then
 	return 0
 else
 	return 1
@@ -52,7 +51,7 @@ fi
 
 getHostStatus()
 {
-curl $remoteIsoHostStatusUrl 2>/dev/null
+timeout 5 curl $remoteIsoHostStatusUrl 2>/dev/null
 }
 
 isGitRepoUptodate()
