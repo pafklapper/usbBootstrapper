@@ -54,6 +54,19 @@ if [ "$(cat $localIsoChecksumFile)" = "$remoteIsoChecksum" ]; then
 	fi
 }
 
+isIsoValid()
+{
+logp info "Integriteitscontrole van de gedownloade schijf..."
+localIsoChecksum="$(sha256sum $localIsoFile | cut -f1 -d\ )";
+echo $localIsoChecksum > $localIsoChecksumFile
+
+if [ "$localIsoChecksum" = "$remoteIsoChecksum" ];then
+	return 0 
+else
+	return 1
+fi
+}
+
 downloadIso()
 {
 mkdir  -p $localIsoDirectory
@@ -73,16 +86,14 @@ for i in {0..2}; do
 	fi
 done
 
-logp info "Integriteitscontrole van de gedownloade schijf..."
-localIsoChecksum="$(sha256sum $localIsoFile | cut -f1 -d\ )";
-echo $localIsoChecksum > $localIsoChecksumFile
 
-if [ "$localIsoChecksum" = "$remoteIsoChecksum" ];then
+if validateIso;then
 	logp info "De windows schijf is gevalideerd!"
 else
 	rm -f $localIsoFile; rm -f $localIsoChecksum
 	logp fatal "De gedownloade schijf is corrupt!"
 fi
+
 }
 
 manageIso()
