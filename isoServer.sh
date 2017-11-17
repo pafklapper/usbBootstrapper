@@ -173,7 +173,7 @@ fi
 if mountWindowsHarddisk; then
 	logp info "Windows installatie gevonden."
 
-	ln -s $windowsIsoDirectory $nginxDefaultDirectory
+	mkdir  -p $windowsIsoDirectory && ln -s $windowsIsoDirectory $nginxDefaultDirectory || logp fatal "Kon de lokale hostfolder niet aanmaken!"
 	
 	if systemctl start nginx; then
 		echo WAIT > $localIsoHostStatusUrl
