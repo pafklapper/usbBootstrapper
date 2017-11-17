@@ -94,23 +94,26 @@ else
 	while :; do
 		if isHostUp; then
 		case getHostStatus in
-			ok)
+			OK)
 				if downloadIso; then
 					return 0
 				else
 					logp fatal "Windows ISO kon niet worden gedownload!"
 				fi
 			;;
-			wait)
+			WAIT)
 			logp info "De externe host $remoteIsoHost is nog aan het opwarmen. Een moment geduld."
 			sleep 60
+			*)
+			logp warning "De externe host $remoteIsoHost heeft onbekende status!"
 			;;
 		esac
 		else
 			logp fatal "De externe host $remoteIsoHost is offline! "
 		fi
 
-			done
+	sleep 1
+	done
 fi
 }
 
