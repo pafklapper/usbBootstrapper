@@ -24,7 +24,12 @@ sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # debian specific!
-apt -y install curl wget wpasupplicant xz-utils pv dmidecode
+apt -y install curl wget wpasupplicant xz-utils pv dmidecode make
+
+# https://github.com/theZiz/aha : ANSI -> HTML conversion
+cd $installationDirectory/externalModules/aha
+make
+
 
 cat<<EOF>/etc/network/interfaces
 auto lo
