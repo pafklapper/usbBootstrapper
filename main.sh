@@ -49,6 +49,8 @@ if ! isGitRepoUptodate; then
 		logp endsection
 		logp info "Installeren van updates gelukt. De computer start in vijf seconden opnieuw op!"
 		sleep 5 && reboot
+	else
+		logp fatal "De computer moet opnieuw opgestart worden!"
 	fi
 fi
 

@@ -10,7 +10,7 @@ fi
 if [ -n "$(grep TESTING=y $confFile)" ]; then
 	echo Edit config file first!
 	echo then remove/change TESTING=y
-	read -p "press a key +enter to continue!" && exit 0
+	read -p "press a key +enter to continue!" && exit 1
 fi
 
 source $confFile
