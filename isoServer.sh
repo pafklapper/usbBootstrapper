@@ -93,9 +93,6 @@ if isIsoDownloaded && isIsoUptodate; then
 else
 	while :; do
 		if isHostUp; then
-
-		echo $(getHostStatus) && read
-
 		case "$(getHostStatus)" in
 			OK)
 				if downloadIso; then
