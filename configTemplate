@@ -19,6 +19,7 @@ remoteIsoSizeUrl=$remoteIsoHost/WIN10.ISO.xz.humansize
 #local host info
 windowsMountPoint="/mnt/windows"
 nginxDefaultDirectory="/var/www/html"
+logFileSymlink="/var/www/html/index.html"
 
 localIsoDirectory="$windowsMountPoint/windowsUsbBootstrapper"
 

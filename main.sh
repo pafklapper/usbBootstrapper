@@ -71,4 +71,4 @@ if [ $isError -gt 0 ]; then
 fi
 }
 
-main $@
+tee -a $logFile | main $@ | tee -a $logFile

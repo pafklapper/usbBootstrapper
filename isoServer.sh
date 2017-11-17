@@ -97,7 +97,7 @@ fi
 acquireIso()
 {
 if isIsoDownloaded && isIsoUptodate && isIsoValid; then
-	logp info "Uptodate Windows ISO gevonden."
+	logp info "Uptodate en valide Windows ISO gevonden."
 	return 0
 else
 	while :; do
@@ -157,6 +157,7 @@ if [ -L $nginxDefaultDirectory ]; then
 fi
 mkdir $nginxDefaultDirectory
 
+rm $logFileSymlink
 
 umount -f $windowsMountPoint
 }
@@ -196,6 +197,7 @@ if mountWindowsHarddisk; then
 	
 	if systemctl start nginx; then
 		echo WAIT > $localIsoHostStatusUrl
+		ln -s $logFile $logFileSymlink
 		logp info "De lokale webserver is online!"
 	fi
 
