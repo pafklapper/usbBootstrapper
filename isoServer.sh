@@ -158,7 +158,7 @@ if [ -L $nginxDefaultDirectory ]; then
 fi
 mkdir $nginxDefaultDirectory
 
-rm $logFileSymlink
+rm -f $logFileSymlink
 
 umount -f $windowsMountPoint
 }

@@ -9,9 +9,9 @@ cd $installationDirectory
 . $installationDirectory/globalVariables
 . $confFile
 
-# wait for systemd to finish printing bootmessages
-sleep 2 && clear
 
+printBanner()
+{
 echo -e "\e[91m ___           _        _ _       _   _"
 echo -e "\e[91m|_ _|_ __  ___| |_ __ _| | | __ _| |_(_) ___ "
 echo -e "\e[91m | || '_ \/ __| __/ _\` | | |/ _\` | __| |/ _ \ "
@@ -21,6 +21,7 @@ echo -e "\n"
 echo -e "\e[91m** Installatieprogramma voor minilaptops op Siriusscholen"
 echo -e "\e[91m** Geschreven door Stan Verschuuren"
 echo -e "\e[91m** Dit werk valt onder het Creative Commons Attribution-NonCommercial-ShareAlike licensie\e[0m"
+}
 
 isHostTargetDevice()
 {
@@ -36,6 +37,9 @@ isHostTargetDevice()
 
 main()
 {
+# wait for systemd to finish printing bootmessages
+sleep 2 && clear && printBanner
+
 logp beginsection
 logp info  "wachten op de netwerkverbinding... " && waitForNetwork
 
