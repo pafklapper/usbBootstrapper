@@ -86,14 +86,12 @@ for i in {0..2}; do
 	fi
 done
 
-
 if validateIso;then
 	logp info "De windows schijf is gevalideerd!"
 else
 	rm -f $localIsoFile; rm -f $localIsoChecksum
 	logp fatal "De gedownloade schijf is corrupt!"
 fi
-
 }
 
 manageIso()
@@ -143,7 +141,12 @@ serveIso()
 	logp info "Het systeem is actief op $localIP!"
 	logp warning "Gebruik de stroomknop op de pc om het systeem af te sluiten!"
 
-	while :; do sleep 1; done
+	while :; do
+		if [ "$(read)"= "stop" ]; then
+			exit 1
+		fi
+		sleep 1
+	done
 }
 
 finish(){
