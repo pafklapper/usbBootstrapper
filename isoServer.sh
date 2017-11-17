@@ -123,7 +123,7 @@ serveIso()
 {
 	echo OK > $localIsoHostStatusUrl
 
-	if ! systemctl is-active nginx; then
+	if ! systemctl is-active nginx >/dev/null; then
 		logp fatal "De lokale webserver is niet online!"
 	fi
 
