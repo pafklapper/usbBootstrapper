@@ -7,7 +7,6 @@ TESTING=y
 WPASSID=
 WPAPSK=
 
-
 # remote host info
 remoteIsoHost=
 remoteIsoHostStatusUrl=$remoteIsoHost/status
