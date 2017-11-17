@@ -102,10 +102,12 @@ else
 				fi
 			;;
 			WAIT)
-			logp info "De externe host $remoteIsoHost is nog aan het opwarmen. Een moment geduld."
-			sleep 60
+				logp info "De externe host $remoteIsoHost is nog aan het opwarmen. Een moment geduld."
+				sleep 60
+			;;
 			*)
-			logp warning "De externe host $remoteIsoHost heeft onbekende status!"
+				logp warning "De externe host $remoteIsoHost heeft onbekende status!"
+				sleep 60
 			;;
 		esac
 		else
