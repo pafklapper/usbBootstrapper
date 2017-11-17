@@ -39,6 +39,20 @@ do
 done
 }
 
+isHostUp()
+{
+if curl -sSf $remoteIsoHostStatusUrl> /dev/null; then
+	return 0
+else
+	return 1
+fi
+}
+
+getHostStatus()
+{
+curl $remoteIsoHostStatusUrl 2>/dev/null
+}
+
 isGitRepoUptodate()
 {
 git fetch

@@ -1,23 +1,11 @@
 #!/bin/bash
 
-
-windowsMountPoint="/mnt/windows"
-windowsISODirectory="$windowsMountPoint/windowsUsbBootstrapper"
-windowsISO="$windowsISODirectory/WIN10.ISO.xz"
-
-localISOChecksum="$windowsISODirectory/WIN10.ISO.xz.sha256"
-
-nginxDefaultDirectory="/var/www/html"
-
 installationDirectory=/srv/windowsUsbBootstrapper
 cd $installationDirectory
 
 . $installationDirectory/globalFunctions
 . $installationDirectory/globalVariables
 . $confFile
-
-
-
 
 mountWindowsHarddisk()
 {
@@ -46,76 +34,92 @@ done
 	fi
 }
 
-isISODownloaded()
+isIsoDownloaded()
 {
- if [ -d $windowsISODirectory ] && [ -f $windowsISO ]; then
+ if [ -d $localIsoDirectory ] && [ -f $localIsoFile ]; then
  	return 0;
  else
  	return 1;
  fi
 }
 
-isISOUptodate()
+isIsoUptodate()
 {
-remoteISOChecksum="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
+remoteIsoChecksum="$(curl $remoteIsoChecksumUrl 2>/dev/null)"
 
-if [ "$(cat $localISOChecksum)" = "$remoteISOChecksum" ]; then
+if [ "$(cat $localIsoChecksumFile)" = "$remoteIsoChecksum" ]; then
 		return 0;
 	else
 		return 1;
 	fi
 }
 
-downloadISO()
+downloadIso()
 {
-mkdir  -p $windowsISODirectory
-remoteIsoSize="$(curl $WINISOSIZEURL 2>/dev/null)"
-remoteIsoChecksum="$(curl $WINISOCHECKSUMURL 2>/dev/null)"
+mkdir  -p $windowsIsoDirectory
+remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
+remoteIsoChecksum="$(curl $remoteIsoChecksumUrl 2>/dev/null)"
 
 logp info "Het systeem zal nu de geprepareerde Windows schijf downloaden..."
 for i in {0..2}; do
-	wget $WINISOURL -q -O - | pv --size $remoteIsoSize |  dd of=$windowsISO
+	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize |  dd of=$localIsoFile
 	if [ $? -eq 0 ]; then
 		logp info "De windows schijf is succesvol gedownload!"
 		sync
 		break
 	else
-		rm -f $windowsISO
+		rm -f $localIsoFile
 		logp warning "Downloaden mislukt! Poging $i"
 	fi
 done
 
 logp info "Integriteitscontrole van de gedownloade schijf..."
-ISOChecksum="$(sha256sum $windowsISO | cut -f1 -d\ )";
-echo $ISOChecksum > $localISOChecksum
+localIsoChecksum="$(sha256sum $localIsoFile | cut -f1 -d\ )";
+echo $localIsoChecksum > $localIsoChecksumFile
 
-if [ "$ISOChecksum" = "$remoteIsoChecksum" ];then
+if [ "$localIsoChecksum" = "$remoteIsoChecksum" ];then
 	logp info "De windows schijf is gevalideerd!"
 else
-	rm -f $windowsISO; rm -f $localIsoChecksum
+	rm -f $localIsoFile; rm -f $localIsoChecksum
 	logp fatal "De gedownloade schijf is corrupt!"
 fi
 }
 
-manageISO()
+manageIso()
 {
-if isISODownloaded && isISOUptodate; then
+if isIsoDownloaded && isIsoUptodate; then
 	logp info "Uptodate Windows ISO gevonden."
 	return 0
-else 
-	if downloadISO; then
-		return 0
-	else
-		logp fatal "Windows ISO kon niet worden gedownload!"
-	fi
+else
+	while :; do
+		if isHostUp; then
+		case getHostStatus in
+			ok)
+				if downloadIso; then
+					return 0
+				else
+					logp fatal "Windows ISO kon niet worden gedownload!"
+				fi
+			;;
+			wait)
+			logp info "De host $remoteIsoHost is nog aan het opwarmen. Een moment geduld."
+			sleep 60
+			;;
+		esac
+		else
+			logp fatal "De host $remoteIsoHost is offline! "
+		fi
+
+			done
 fi
 }
 
-serveISO()
+serveIso()
 {
-	systemctl start nginx
-	if [ $? -gt 0 ]; then
-		logp fatal "NGINX kon niet worden gestart!"
+	echo OK > $localIsoHostStatusUrl
+
+	if ! systemctl is-active nginx; then
+		logp fatal "De webserver is niet online!"
 	fi
 
 	localIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
@@ -127,12 +131,15 @@ serveISO()
 }
 
 finish(){
-	if [ -L $nginxDefaultDirectory ]; then
-		rm -f $nginxDefaultDirectory
-	fi
-	mkdir $nginxDefaultDirectory
+echo WAIT > $localIsoHostStatusUrl
 
-	umount -f $windowsMountPoint
+if [ -L $nginxDefaultDirectory ]; then
+	rm -f $nginxDefaultDirectory
+fi
+mkdir $nginxDefaultDirectory
+
+
+umount -f $windowsMountPoint
 }
 trap finish INT TERM EXIT
 
@@ -166,11 +173,17 @@ fi
 if mountWindowsHarddisk; then
 	logp info "Windows installatie gevonden."
 
-	ln -s $windowsISODirectory $nginxDefaultDirectory
+	ln -s $windowsIsoDirectory $nginxDefaultDirectory
+	
+	if systemctl start nginx; then
+		echo WAIT > $localIsoHostStatusUrl
+		logp info "De webserver is online!"
+	fi
 
-	if manageISO; then
-		logp info "Klaar om ISO te hosten. Bezig met opstarten NGINX..."
-		if serveISO; then
+
+	if manageIso; then
+		logp info "Klaar om ISO te hosten. Bezig met opstarten webserver..."
+		if serveIso; then
 			logp endsection
 			logp info "Het systeem zal nu worden afgesloten..."
 			sleep 3 && shutdown

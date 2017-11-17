@@ -7,11 +7,27 @@ TESTING=y
 WPASSID=
 WPAPSK=
 
-ISODLSITE=
 
-WINISOURL=$ISODLSITE/WIN10.ISO.xz
-WINISOCHECKSUMURL=$ISODLSITE/WIN10.ISO.xz.sha256
-WINISOSIZEURL=$ISODLSITE/WIN10.ISO.xz.humansize
+# remote host info
+remoteIsoHost=
+remoteIsoHostStatusUrl=$remoteIsoHost/status
 
-#leave this line at end of file
+remoteIsoUrl=$remoteIsoHost/WIN10.ISO.xz
+remoteIsoChecksumUrl=$remoteIsoHost/WIN10.ISO.xz.sha256
+remoteIsoSizeUrl=$remoteIsoHost/WIN10.ISO.xz.humansize
+
+#local host info
+windowsMountPoint="/mnt/windows"
+nginxDefaultDirectory="/var/www/html"
+
+localIsoDirectory="$windowsMountPoint/windowsUsbBootstrapper"
+
+localIsoFile="$localIsoDirectory/WIN10.ISO.xz"
+localIsoChecksumFile="$localIsoDirectory/WIN10.ISO.xz.sha256"
+localIsoHostStatusUrl="$localIsoDirectory/status"
+
+
+
+
+# this var will be populated by script
 targetDevices=()
