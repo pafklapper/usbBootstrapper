@@ -35,6 +35,7 @@ isHostTargetDevice()
 	return 1
 }
 
+
 main()
 {
 # wait for systemd to finish printing bootmessages
@@ -75,10 +76,7 @@ if [ $isError -gt 0 ]; then
 fi
 }
 
-aha="$installationDirectory/externalModules/aha/aha"
 
-if [ -f $aha ]; then
-	tee -a $logFile | main $@ | aha | tee -a $logFile
-else
-	tee -a $logFile | main $@ | tee -a $logFile
-fi
+tee -a $logFile | main $@ | tee -a $logFile
+
+aha="$installationDirectory/externalModules/aha/aha"
