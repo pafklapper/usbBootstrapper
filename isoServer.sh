@@ -153,17 +153,15 @@ serveIso()
 finish(){
 echo WAIT > $localIsoHostStatusUrl
 
-tempDir=$(mktemp -d)
-cat  $localIsoDirectory/index.html > $tempDir/index.html
-cat $localIsoHostStatusUrl > $tempDir/status
-
-
 if [ -L $nginxDefaultDirectory ]; then
 	rm -f $logFileSymlink
 	rm -f $nginxDefaultDirectory
 fi
 mkdir $nginxDefaultDirectory
-cp $tempDir/* $nginxDefaultDirectory
+
+# twice for the new non-symlink default folder
+echo WAIT > $localIsoHostStatusUrl
+ln -s $logHtmlFile $logFileSymlink
 
 rm -rf $tempDir
 umount -f $windowsMountPoint
