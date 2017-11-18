@@ -1,2 +1,2 @@
 confFile=/etc/windowsUsbBootstrapper.config
-logFile=/root/winUsbBootstrapper.log
+#logFile=/root/winUsbBootstrapper.log
