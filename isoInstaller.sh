@@ -50,6 +50,7 @@ do
 	printf "IP-adress: "; read  remoteIsoHost
 
 	echo remoteIsoHost: $remoteIsoHost
+	echo remoteIsoHostStatusUrl:$remoteIsoHostStatusUrl
 	isHostUp && echo hostIsU
 	echo hosttatus: $(getHostStatus)
 	read
