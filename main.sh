@@ -76,6 +76,6 @@ if [ $isError -gt 0 ]; then
 fi
 }
 
-export logFile=`mktemp /tmp/usbBootstrapperLog.xxx`
+logFile=$(mktemp /tmp/usbBootstrapperLog.xxx)
 echo $logFile && read
 tee -a $logFile | main $@ | tee -a $logFile
