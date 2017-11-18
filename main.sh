@@ -76,6 +76,7 @@ if [ $isError -gt 0 ]; then
 fi
 }
 
-logFile=$(mktemp /tmp/usbBootstrapperLog.xxx)
-echo $logFile && read
+#clear prev log and run with loging enabled (for html)
+cat /dev/null > $logFile
+
 tee -a $logFile | main $@ | tee -a $logFile
