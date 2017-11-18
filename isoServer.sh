@@ -1,11 +1,14 @@
 #!/bin/bash
 
+initVars()
+{
 installationDirectory=/srv/windowsUsbBootstrapper
 cd $installationDirectory
 
 . $installationDirectory/globalVariables
 . $confFile
 . $installationDirectory/globalFunctions
+}
 
 mountWindowsHarddisk()
 {
@@ -225,5 +228,6 @@ else
 fi
 }
 
+initVars
 main $@
 

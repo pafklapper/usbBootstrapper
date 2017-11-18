@@ -3,21 +3,19 @@
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 # semantic: download iso from server node, than xzcat it unto the laptops harddrive
 
+initVars()
+{
 installationDirectory=/srv/windowsUsbBootstrapper
 cd $installationDirectory
 
 . $installationDirectory/globalVariables
 . $confFile
 . $installationDirectory/globalFunctions
-
+}
 
 # constants
 HOSTHDD=/dev/mmcblk1
 APROXSIZE="3700M"
-
-# initialize vars with empty value
-localISoHost=
-STATUS=
 
 # ripped from: https://www.linuxjournal.com/content/validating-ip-address-bash-script
 function isIpValid()
@@ -37,17 +35,6 @@ function isIpValid()
     return $stat
 }
 
-isHostOnline()
-{
-	STATUS="$(timeout 5 curl -q $remoteIsoHostStatusUrl 2>/dev/null)"
-	if [ $? -eq 0 ]; then
-		return 0
-	else
-		echo "No host available @ $1!"
-		return 1
-	fi
-}
-
 getIpAutomatic()
 {
 	# not written yes
@@ -60,11 +47,13 @@ logp info "Vul IP-adress handmatig in of druk op de stroomknop op de pc in om op
 
 while :;
 do
-	read -p "IP adres: " localIsoHost
+	read -p "IP adres: " remoteIsoHost
 
-	if isIpValid $localIsoHost; then
+	if isIpValid $remoteIsoHost; then
 		#check if host is up and serving
-		if  isHostOnline $localIsoHost; then
+		if  isHostUp && [ -n "$(getHostStatus)" ] ; then
+			sed -i '/remoteIsoHost=/c\remoteIsoHost=$remoteIsoHost' $confFile
+			initVars
 			return 0
 		else
 			logp warning "Host $localIsoHost is niet beschikbaar! Probeer opnieuw!"
@@ -97,7 +86,9 @@ fi
 while :;
 do
 	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $localIsoHost ..."
-	wget $localIsoHost/WIN10.ISO.xz -q -O - | pv --size $APROXSIZE | xz -d | dd of=$HOSTHDD
+
+	remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
+	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -d | dd of=$HOSTHDD
 	if [ $? -eq 0 ]; then
 		sync
 		logp info "Installatie succesvol! druk op een toets om door te gaan."
@@ -113,4 +104,5 @@ done
 
 }
 
+initVars
 main
