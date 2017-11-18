@@ -209,7 +209,7 @@ if mountWindowsHarddisk; then
 
 
 	if acquireIso; then
-		logp info "Klaar om ISO te hosten. Bezig met opstarten webserver..."
+		logp info "Klaar om ISO te hosten. Bezig met opzetten webserver..."
 		if serveIso; then
 			logp endsection
 			logp info "Het systeem zal nu worden afgesloten..."

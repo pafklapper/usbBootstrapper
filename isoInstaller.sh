@@ -3,16 +3,24 @@
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 # semantic: download iso from server node, than xzcat it unto the laptops harddrive
 
+installationDirectory=/srv/windowsUsbBootstrapper
+cd $installationDirectory
+
+. $installationDirectory/globalVariables
+. $confFile
+. $installationDirectory/globalFunctions
+
+
 # constants
 HOSTHDD=/dev/mmcblk1
 APROXSIZE="3700M"
 
 # initialize vars with empty value
-IP=
+localISoHost=
 STATUS=
 
 # ripped from: https://www.linuxjournal.com/content/validating-ip-address-bash-script
-function valid_ip()
+function isIpValid()
 {
     local  ip=$1
     local  stat=1
@@ -31,7 +39,7 @@ function valid_ip()
 
 isHostOnline()
 {
-	STATUS="$(timeout 5 curl -q http://$1/status 2>/dev/null)"
+	STATUS="$(timeout 5 curl -q $remoteIsoHostStatusUrl 2>/dev/null)"
 	if [ $? -eq 0 ]; then
 		return 0
 	else
@@ -48,71 +56,54 @@ getIpAutomatic()
 
 getIpManual()
 {
+logp info "Vul IP-adress handmatig in of druk op de stroomknop op de pc in om opnieuw op te starten."
+
 while :;
 do
-	read -p "Enter IP-Adress: " IP
+	read -p "IP adres: " localIsoHost
 
-	if valid_ip $IP; then
+	if isIpValid $localIsoHost; then
 		#check if host is up and serving
-		if  isHostOnline $IP; then
+		if  isHostOnline $localIsoHost; then
 			return 0
 		else
-			echo "Host at $IP is not reachable!"
+			logp warning "Host $localIsoHost is niet beschikbaar! Probeer opnieuw!"
 		fi
 	else
-		echo "Invalid IPadress! Try Again:"
-		IP=
+		echo "Dit is geen correct IP adress. Probeer opnieuw!"
+		localIsoHost=
 	fi
 	sleep 1;
 done
 }
 
-waitForNetwork()
-{
-while :;
-do
-	timeout 5 ping -c1 google.com 1>/dev/null 2>/dev/null
-	if [ $? -eq 0 ]; then
-		echo "Network is accessible!"
-		return 0
-	fi
-
-	sleep 1 
-done
-
-
-}
-
-
-
 main()
 {
-# wait for network
-echo "Waiting for network to come online..." && waitForNetwork
 
 # get or set IP 
-if  getIpAutomatic || ! getIpManual; then
-	echo "FATAL: Could not get IPadress!"
-	echo 1
+if  getIpAutomatic; then
+	logp info "IP adress werd succesvol automatisch verkregen."
+elif getIpManual; then
+	logp info "IP werd succesvol handmatig verkregen."
+else
+	logp fatal "IP adress kon niet worden verkregen!"
 fi
 
 #check for HOSTHDD
 if [ ! -b $HOSTHDD ]; then
-	echo "FATAL: The harddisk was not found! : $HOSTHDD"
-	exit 1;
+	logp fatal "The harddisk was not found! : $HOSTHDD"
 fi
 
 while :;
 do
-	echo "Copying reference image over from $IP. This could take a while ..."
-	wget $IP/WIN10.ISO.xz -q -O - | pv --size $APROXSIZE | xz -d | dd of=$HOSTHDD
+	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $localIsoHost ..."
+	wget $localIsoHost/WIN10.ISO.xz -q -O - | pv --size $APROXSIZE | xz -d | dd of=$HOSTHDD
 	if [ $? -eq 0 ]; then
-		echo "Syncing disks.."
 		sync
-		echo "Installation complete! Press any key to continue "
-		read && echo "Rebooting in 5 seconds.. " && sleep 5 && reboot
+		logp info "Installatie succesvol! druk op een toets om door te gaan."
+		read && logp warning "De computer herstart in vijf seconden!.. " && sleep 5 && reboot
 	else
-		echo "An error happened! Trying again .. "
+		logp warning "Er is iets fout gegaan! Systeem zal downloaden opnieuw proberen .. "
 	fi
 done
 
