@@ -25,7 +25,8 @@ case "$1" in
 	;;
 esac
 
-
+echo $logFile
+read -p aaaa
 cat $logFile | $aha > $logHtmlFile
 }
 
