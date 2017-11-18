@@ -70,7 +70,7 @@ main()
 {
 
 # get or set IP 
-if  getIpAutomatic; then
+if getIpAutomatic; then
 	logp info "IP adress werd succesvol automatisch verkregen."
 elif getIpManual; then
 	logp info "IP werd succesvol handmatig verkregen."
