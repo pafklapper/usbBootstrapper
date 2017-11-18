@@ -25,7 +25,7 @@ case "$1" in
 		echo -e "\e[33m**********************************************"
 	;;
 esac
-
+echo install: $installationDirectory
 echo l:$logFile
 echo lh:$logHtmlFile
 read -p aaaa
