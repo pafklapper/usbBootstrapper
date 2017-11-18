@@ -49,6 +49,9 @@ while :;
 do
 	read -p "IP adres: " remoteIsoHost
 
+	echo $remoteIsoHost
+	read
+
 	if isIpValid $remoteIsoHost; then
 		#check if host is up and serving
 		if  isHostUp && [ -n "$(getHostStatus)" ] ; then
