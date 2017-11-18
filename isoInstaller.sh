@@ -80,7 +80,10 @@ fi
 
 #check for HOSTHDD
 if [ ! -b $HOSTHDD ]; then
-	logp fatal "The harddisk was not found! : $HOSTHDD"
+	#logp fatal "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+
+	echo testing: no memory block fail
+	logp warning "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
 fi
 
 while :;
@@ -88,7 +91,9 @@ do
 	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $localIsoHost ..."
 
 	remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
-	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -d | dd of=$HOSTHDD
+	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -d | dd of=$HOSTHDD
+	echo TESTING: out put to /dev/zero
+	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -d | dd of=/dev/null
 	if [ $? -eq 0 ]; then
 		sync
 		logp info "Installatie succesvol! druk op een toets om door te gaan."
