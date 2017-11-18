@@ -202,6 +202,7 @@ if mountWindowsHarddisk; then
 	
 	if systemctl start nginx; then
 		echo WAIT > $localIsoHostStatusUrl
+		rm -f $logFileSymlink 2>&1 >/dev/null
 		ln -s $logHtmlFile $logFileSymlink
 		logp info "De lokale webserver is online!"
 	fi
