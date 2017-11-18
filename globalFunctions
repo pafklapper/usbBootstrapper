@@ -29,7 +29,7 @@ echo install: $installationDirectory
 echo l:$logFile
 echo lh:$logHtmlFile
 read -p aaaa
-cat $logFile | convertAnsiToHtml> $logHtmlFile
+cat $logFile | $installationDirectory/externalModules/aha/aha > $logHtmlFile
 }
 
 
