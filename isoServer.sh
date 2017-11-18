@@ -154,8 +154,8 @@ finish(){
 echo WAIT > $localIsoHostStatusUrl
 
 tempDir=$(mktemp -d)
-cat  $localIsoDirectory/index.html $tempDir/index.html
-cat $localIsoHostStatusUrl $tempDir/status
+cat  $localIsoDirectory/index.html > $tempDir/index.html
+cat $localIsoHostStatusUrl > $tempDir/status
 
 
 if [ -L $nginxDefaultDirectory ]; then
