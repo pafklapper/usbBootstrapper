@@ -153,13 +153,19 @@ serveIso()
 finish(){
 echo WAIT > $localIsoHostStatusUrl
 
+tempDir=$(mktemp -d)
+cat  $localIsoDirectory/index.html $tempDir/index.html
+cat $localIsoHostStatusUrl $tempDir/status
+
+
 if [ -L $nginxDefaultDirectory ]; then
+	rm -f $logFileSymlink
 	rm -f $nginxDefaultDirectory
 fi
 mkdir $nginxDefaultDirectory
+cp $tempDir/* $nginxDefaultDirectory
 
-rm -f $logFileSymlink
-
+rm -rf $tempDir
 umount -f $windowsMountPoint
 }
 trap finish INT TERM EXIT
