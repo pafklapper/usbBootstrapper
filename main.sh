@@ -77,4 +77,5 @@ fi
 }
 
 export logFile=`mktemp /tmp/usbBootstrapperLog.xxx`
+echo $logFile && read
 tee -a $logFile | main $@ | tee -a $logFile
