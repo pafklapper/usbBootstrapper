@@ -5,9 +5,9 @@
 installationDirectory=/srv/windowsUsbBootstrapper
 cd $installationDirectory
 
-. $installationDirectory/globalFunctions
 . $installationDirectory/globalVariables
 . $confFile
+. $installationDirectory/globalFunctions
 
 
 printBanner()

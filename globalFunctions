@@ -1,7 +1,6 @@
 logp()
 {
 aha="$installationDirectory/externalModules/aha/aha"
-cat $logFile | aha > $logHtmlFile
 
 case "$1" in
 	info)
@@ -14,6 +13,7 @@ case "$1" in
 	fatal)
 		echo -e "\e[31m\e[1m* \e[0m\e[30m\e[101m$2"
 		echo -e "\e[31m\e[1m* \e[0m\e[30m\e[101mDruk een toets om opnieuw op te starten...\e[0m"
+		cat $logFile | aha > $logHtmlFile
 		read && reboot
 	;;
 	beginsection)
@@ -25,6 +25,9 @@ case "$1" in
 		echo -e "\e[33m**********************************************"
 	;;
 esac
+
+
+cat $logFile | aha > $logHtmlFile
 }
 
 
