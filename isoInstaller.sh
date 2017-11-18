@@ -47,10 +47,13 @@ logp info "Vul IP-adress handmatig in of druk op de stroomknop op de pc in om op
 
 while :;
 do
-	read -p "IP adres: " remoteIsoHost
+	printf "IP-adress: "; read  remoteIsoHost
 
-	echo $remoteIsoHost
+	echo remoteIsoHost: $remoteIsoHost
+	isHostUp && echo hostIsU
+	echo hosttatus: $(getHostStatus)
 	read
+
 
 	if isIpValid $remoteIsoHost; then
 		#check if host is up and serving
