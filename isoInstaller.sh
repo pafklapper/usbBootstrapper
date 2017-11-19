@@ -43,8 +43,17 @@ function isIpValid()
 
 getIpAutomatic()
 {
-	# not written yes
-	return 1
+	currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
+	
+	currentNet="$(echo $currentIP | cut -f 1,2,3 -d .)"
+
+echo curNet: $currentNet;
+read break
+
+
+	for i in $(seq 0 255); do
+		nc -v -n -z -w1 
+	done
 }
 
 getIpManual()
