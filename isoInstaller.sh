@@ -47,13 +47,18 @@ getIpAutomatic()
 	
 	currentNet="$(echo $currentIP | cut -f 1,2,3 -d .)"
 
-echo curNet: $currentNet;
-read break
-
-
 	for i in $(seq 0 255); do
-		nc -v -n -z -w1 
+		candidateIp="$curNet.$i"
+		if nc -v -n -z -w1 $candidateIp;then
+			if curl -sff $curNet.$i/status; then
+				logp info "Moederschip gevonden op $curNet!"
+				remoteIsoHost=$curNet
+				return 0
+			fi
+		fi
 	done
+
+	return 1
 }
 
 getIpManual()
