@@ -97,9 +97,9 @@ do
 	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $remoteIsoHost ..."
 
 	remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
-	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -d | dd of=$HOSTHDD
+	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=$HOSTHDD
 	echo TESTING: out put to /dev/zero
-	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -d | dd of=/dev/null
+	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
 	if [ $? -eq 0 ]; then
 		sync
 		logp info "Installatie succesvol! druk op een toets om door te gaan."
