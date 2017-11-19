@@ -4,6 +4,8 @@
 installationDirectory=/srv/windowsUsbBootstrapper
 cd $installationDirectory
 
+confFile=/etc/windowsUsbBootstrapper.config
+
 . $installationDirectory/globalFunctions
 . $installationDirectory/globalVariables
 . $confFile
