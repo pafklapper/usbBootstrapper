@@ -1,7 +1,6 @@
 # CAPITALS means configure yourself, lowercase means it will be generated
 
 # remote host info
-remoteIsoHost=
 remoteIsoHostStatusUrl=$remoteIsoHost/status
 
 remoteIsoUrl=$remoteIsoHost/WIN10.ISO.xz
