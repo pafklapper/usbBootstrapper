@@ -48,11 +48,11 @@ getIpAutomatic()
 	currentNet="$(echo $currentIP | cut -f 1,2,3 -d .)"
 
 	for i in $(seq 0 255); do
-		candidateIp="$curNet.$i"
+		candidateIp="$currentNet.$i"
 		if nc -v -n -z -w1 $candidateIp;then
-			if curl -sff $curNet.$i/status; then
-				logp info "Moederschip gevonden op $curNet!"
-				remoteIsoHost=$curNet
+			if curl -sff $candidateIp/status; then
+				logp info "Moederschip gevonden op $candidateIp!"
+				remoteIsoHost=$candidateIp
 				return 0
 			fi
 		fi
