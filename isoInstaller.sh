@@ -62,11 +62,11 @@ do
 			sed -i '/remoteIsoHost=/c\remoteIsoHost=$remoteIsoHost' $confFile
 			return 0
 		else
-			logp warning "Host $localIsoHost is niet beschikbaar! Probeer opnieuw!"
+			logp warning "Host $remoteIsoHost is niet beschikbaar! Probeer opnieuw!"
 		fi
 	else
 		echo "Dit is geen correct IP adress. Probeer opnieuw!"
-		localIsoHost=
+		remoteIsoHost=
 	fi
 	sleep 1;
 done
@@ -94,7 +94,7 @@ fi
 
 while :;
 do
-	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $localIsoHost ..."
+	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $remoteIsoHost ..."
 
 	remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
 	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -d | dd of=$HOSTHDD
