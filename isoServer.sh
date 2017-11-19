@@ -212,6 +212,7 @@ if mountWindowsHarddisk; then
 	
 	if systemctl start nginx; then
 		echo WAIT > $localIsoHostStatusUrl
+		echo usbBootstrapper > $localIsoHostId
 		rm -f $logFileSymlink 2>&1 >/dev/null
 		ln -s $logHtmlFile $logFileSymlink
 		logp info "De lokale webserver is online!"

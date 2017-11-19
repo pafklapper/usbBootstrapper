@@ -50,7 +50,7 @@ getIpAutomatic()
 	for i in $(seq 0 255); do
 		candidateIp="$currentNet.$i"
 		if nc -v -n -z -w1 $candidateIp 80;then
-			if curl -sff $candidateIp/status; then
+			if [ "$(curl -sff $candidateIp/id)" = "usbBootstrapper" ]; then
 				logp info "Moederschip gevonden op $candidateIp!"
 				remoteIsoHost=$candidateIp
 				return 0
