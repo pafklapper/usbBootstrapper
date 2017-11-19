@@ -83,7 +83,7 @@ if [ $isError -gt 0 ]; then
 fi
 }
 
-initConstants && initVars 
+initConstants && initVars && cd $installationDirectory
 
 #clear prev log and run with loging enabled (for html)
 cat /dev/null > $logFile
