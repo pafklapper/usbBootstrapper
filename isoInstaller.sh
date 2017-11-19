@@ -60,6 +60,7 @@ getIpAutomatic()
 		fi
 	done
 
+	logp warning "IP adres kon niet automatisch verkregen worden!"
 	return 1
 }
 
