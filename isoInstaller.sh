@@ -43,13 +43,15 @@ function isIpValid()
 
 getIpAutomatic()
 {
+	logp info "Proberen automatisch IP adres van computer die schijf host te verkrijgen..."
+
 	currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
 	
 	currentNet="$(echo $currentIP | cut -f 1,2,3 -d .)"
 
 	for i in $(seq 0 255); do
 		candidateIp="$currentNet.$i"
-		if nc -v -n -z -w1 $candidateIp 80;then
+		if nc -v -n -z -w1 $candidateIp 80 2>&1 >/dev/null;then
 			if [ "$(curl -sff $candidateIp/id)" = "usbBootstrapper" ]; then
 				logp info "Moederschip gevonden op $candidateIp!"
 				remoteIsoHost=$candidateIp
