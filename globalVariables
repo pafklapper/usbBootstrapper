@@ -1,5 +1,3 @@
-# CAPITALS means configure yourself, lowercase means it will be generated
-
 # remote host info
 remoteIsoHostStatusUrl=$remoteIsoHost/status
 
@@ -19,8 +17,3 @@ localIsoDirectory="$windowsMountPoint/windowsUsbBootstrapper"
 localIsoFile="$localIsoDirectory/WIN10.ISO.xz"
 localIsoChecksumFile="$localIsoDirectory/WIN10.ISO.xz.sha256"
 localIsoHostStatusUrl="$localIsoDirectory/status"
-
-# this var will be populated by script
-targetDevices=()
-confFile=/etc/windowsUsbBootstrapper.config
-logFile=/root/winUsbBootstrapper.log
