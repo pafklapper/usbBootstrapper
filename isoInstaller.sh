@@ -54,7 +54,7 @@ logp info "Vul IP-adress handmatig in of druk op de stroomknop op de pc in om op
 while :;
 do
 	printf "IP-adress: "; read  remoteIsoHost
-	
+	initVars 
 	echo remoteIsoHost: $remoteIsoHost
 	echo remoteIsoHostStatusUrl:$remoteIsoHostStatusUrl
 	isHostUp && echo hostIsU
