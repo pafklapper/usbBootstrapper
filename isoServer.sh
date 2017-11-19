@@ -83,6 +83,10 @@ remoteIsoChecksum="$(curl $remoteIsoChecksumUrl 2>/dev/null)"
 
 logp info "Het systeem zal nu de geprepareerde Windows schijf downloaden..."
 for i in {0..2}; do
+
+	echo RIU: $remoteIsoUrl
+	echo RIS: $remoteIsoSize
+	read
 	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize |  dd of=$localIsoFile
 	if [ $? -eq 0 ]; then
 		logp info "De windows schijf is succesvol gedownload!"
