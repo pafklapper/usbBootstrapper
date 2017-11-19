@@ -4,32 +4,17 @@
 TESTING=y
 
 # use wpa_passphrase [SSID] [PSK] to generate PSK
-WPASSID=
-WPAPSK=
+WPASSID="[placeholder]"
+WPAPSK="[placeholder]"
 
 # remote host info
 remoteIsoHost=
-remoteIsoHostStatusUrl=$remoteIsoHost/status
 
-remoteIsoUrl=$remoteIsoHost/WIN10.ISO.xz
-remoteIsoChecksumUrl=$remoteIsoHost/WIN10.ISO.xz.sha256
-remoteIsoSizeUrl=$remoteIsoHost/WIN10.ISO.xz.humansize
+confFile=/etc/windowsUsbBootstrapper.config
+logFile=/root/winUsbBootstrapper.log
 
-#local host info
-windowsMountPoint="/mnt/windows"
-nginxDefaultDirectory="/var/www/html"
-
-logFileSymlink="/var/www/html/index.html"
-logHtmlFile="/var/www/UsbBootstrapperLog.html"
-
-localIsoDirectory="$windowsMountPoint/windowsUsbBootstrapper"
-
-localIsoFile="$localIsoDirectory/WIN10.ISO.xz"
-localIsoChecksumFile="$localIsoDirectory/WIN10.ISO.xz.sha256"
-localIsoHostStatusUrl="$localIsoDirectory/status"
-
-
-
+# this var will be populated by script
+installationDirectory=
 
 # this var will be populated by script
 targetDevices=()

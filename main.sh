@@ -2,13 +2,20 @@
 # written by pafklapper
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 
-installationDirectory=/srv/windowsUsbBootstrapper
-cd $installationDirectory
+initConstants()
+{
+confFile=/etc/windowsUsbBootstrapper.config
 
-. $installationDirectory/globalVariables
+logFile=/root/winUsbBootstrapper.log
 . $confFile
-. $installationDirectory/globalFunctions
+}
 
+initVars()
+{
+installationDirectory="$(dirname $(realpath "$0"))"
+. $installationDirectory/globalVariables
+. $installationDirectory/globalFunctions
+}
 
 printBanner()
 {
@@ -75,6 +82,8 @@ if [ $isError -gt 0 ]; then
 	logp fatal "Er is iets verschrikkelijk fout gegaan! :("
 fi
 }
+
+initConstants && initVars 
 
 #clear prev log and run with loging enabled (for html)
 cat /dev/null > $logFile

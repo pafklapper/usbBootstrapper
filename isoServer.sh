@@ -1,12 +1,17 @@
 #!/bin/bash
 
+initConstants()
+{
+confFile=/etc/windowsUsbBootstrapper.config
+
+logFile=/root/winUsbBootstrapper.log
+. $confFile
+}
+
 initVars()
 {
-installationDirectory=/srv/windowsUsbBootstrapper
-cd $installationDirectory
-
+installationDirectory="$(dirname $(realpath "$0"))"
 . $installationDirectory/globalVariables
-. $confFile
 . $installationDirectory/globalFunctions
 }
 
@@ -228,6 +233,5 @@ else
 fi
 }
 
-initVars
-main $@
+initConstants && initVars && main $@
 

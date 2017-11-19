@@ -3,15 +3,21 @@
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 # semantic: download iso from server node, than xzcat it unto the laptops harddrive
 
+initConstants()
+{
+confFile=/etc/windowsUsbBootstrapper.config
+
+logFile=/root/winUsbBootstrapper.log
+. $confFile
+}
+
 initVars()
 {
-installationDirectory=/srv/windowsUsbBootstrapper
-cd $installationDirectory
-
+installationDirectory="$(dirname $(realpath "$0"))"
 . $installationDirectory/globalVariables
-. $confFile
 . $installationDirectory/globalFunctions
 }
+
 
 # constants
 HOSTHDD=/dev/mmcblk1
@@ -48,7 +54,7 @@ logp info "Vul IP-adress handmatig in of druk op de stroomknop op de pc in om op
 while :;
 do
 	printf "IP-adress: "; read  remoteIsoHost
-
+	
 	echo remoteIsoHost: $remoteIsoHost
 	echo remoteIsoHostStatusUrl:$remoteIsoHostStatusUrl
 	isHostUp && echo hostIsU
@@ -116,5 +122,4 @@ done
 
 }
 
-initVars
-main
+initConstants && initVars && main $@
