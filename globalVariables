@@ -16,4 +16,5 @@ localIsoDirectory="$windowsMountPoint/windowsUsbBootstrapper"
 
 localIsoFile="$localIsoDirectory/WIN10.ISO.xz"
 localIsoChecksumFile="$localIsoDirectory/WIN10.ISO.xz.sha256"
+localIsoSizeFile="$localIsoDirectory/WIN10.ISO.xz.humansize"
 localIsoHostStatusUrl="$localIsoDirectory/status"
