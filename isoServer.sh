@@ -95,6 +95,8 @@ for i in {0..2}; do
 done
 
 if isIsoValid;then
+	# update size
+	echo $remoteIsoSize > $localIsoSizeFile
 	logp info "De windows schijf is gevalideerd!"
 else
 	rm -f $localIsoFile; rm -f $localIsoChecksum
