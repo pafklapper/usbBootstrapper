@@ -55,18 +55,11 @@ while :;
 do
 	printf "IP-adress: "; read  remoteIsoHost
 	initVars 
-	echo remoteIsoHost: $remoteIsoHost
-	echo remoteIsoHostStatusUrl:$remoteIsoHostStatusUrl
-	isHostUp && echo hostIsU
-	echo hosttatus: $(getHostStatus)
-	read
-
 
 	if isIpValid $remoteIsoHost; then
 		#check if host is up and serving
 		if  isHostUp && [ -n "$(getHostStatus)" ] ; then
 			sed -i '/remoteIsoHost=/c\remoteIsoHost=$remoteIsoHost' $confFile
-			initVars
 			return 0
 		else
 			logp warning "Host $localIsoHost is niet beschikbaar! Probeer opnieuw!"
