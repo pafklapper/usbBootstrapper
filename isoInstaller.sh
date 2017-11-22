@@ -43,25 +43,43 @@ function isIpValid()
 
 getIpAutomatic()
 {
-	logp info "Proberen automatisch IP adres van computer die schijf host te verkrijgen..."
+logp info "Proberen automatisch IP adres van computer die schijf host te verkrijgen..."
 
-	currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
-	
-	currentNet="$(echo $currentIP | cut -f 1,2,3 -d .)"
+currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
+currentNet="$(echo $currentIP | cut -f 1,2,3 -d .)"
 
-	for i in $(seq 0 255); do
-		candidateIp="$currentNet.$i"
-		if nc -v -n -z -w1 $candidateIp 80 1>/dev/null 2>&1;then
-			if [ "$(curl -sff $candidateIp/id)" = "usbBootstrapper" ]; then
-				logp info "Moederschip gevonden op $candidateIp!"
-				remoteIsoHost=$candidateIp
-				return 0
-			fi
-		fi
-	done
+ipSet="$(nmap -T5 --max-parallelism=100 -oG - -n -sn -sP $currentNet.0/24 | awk '/Up$/{print $2}')"
 
+if [ $? -gt 0 ]; then
 	logp warning "IP adres kon niet automatisch verkregen worden!"
 	return 1
+fi
+
+while read -r candidateIp; do
+	if [ "$(curl -sff $candidateIp/id)" = "usbBootstrapper" ]; then
+		logp info "Moederschip gevonden op $candidateIp!"
+		remoteIsoHost=$candidateIp
+		return 0
+	fi
+done <<< "$ipSet"
+
+logp warning "IP adres kon niet automatisch verkregen worden!"
+return 1
+
+
+#	for i in $(seq 0 255); do
+#		candidateIp="$currentNet.$i"
+#		if nc -v -n -z -w1 $candidateIp 80 1>/dev/null 2>&1;then
+#			if [ "$(curl -sff $candidateIp/id)" = "usbBootstrapper" ]; then
+#				logp info "Moederschip gevonden op $candidateIp!"
+#				remoteIsoHost=$candidateIp
+#				return 0
+#			fi
+#		fi
+#	done
+#
+#	logp warning "IP adres kon niet automatisch verkregen worden!"
+#	return 1
 }
 
 getIpManual()
