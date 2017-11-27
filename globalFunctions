@@ -25,6 +25,15 @@ case "$1" in
 		echo -e "\e[33m||||||||||||||||||||||||||||||||||||||||||||||"
 		echo -e "\e[33m**********************************************"
 	;;
+	notify)
+		# as ripped from: https://www.forsomedefinition.com/automation/creating-telegram-bot-notifications/
+		local curlTimeOut="10"
+		local CHATID="$(curl --max-time $curlTimeOut "https://api.telegram.org/bot$TELEGRAMTOKEN/getUpdates" | jq '.' | grep '"id"' | head -n1 | grep -o '[0-9]\+')" 
+		local URL="https://api.telegram.org/bot$CHATID/sendMessage"
+		local TEXT="$2"
+
+		curl -s --max-time $curlTimeOut -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT" $URL >/dev/null
+	;;
 esac
 cat $logFile | $installationDirectory/externalModules/aha/aha --black > $logHtmlFile
 }

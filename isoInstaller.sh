@@ -135,9 +135,12 @@ do
 	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=$HOSTHDD
 	echo TESTING: out put to /dev/zero
 	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
+
+	echo TESTING: error checking not working yet
 	if [ $? -eq 0 ]; then
 		sync
 		logp info "Installatie succesvol! druk op een toets om door te gaan."
+		logp notify "Installatie voor host VAR? afgerond!"
 		read && logp warning "De computer herstart in vijf seconden!.. " && sleep 5 && reboot
 	else
 		logp warning "Er is iets fout gegaan! Systeem zal downloaden opnieuw proberen .. "
