@@ -55,7 +55,7 @@ done
 
 isHostUp()
 {
-if timeout 5 curl -sSf $remoteIsoHost > /dev/null; then
+if timeout 5 curl -sSf $remoteIsoHostStatusUrl > /dev/null; then
 	return 0
 else
 	return 1
