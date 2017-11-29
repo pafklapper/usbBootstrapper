@@ -18,7 +18,7 @@ if [ -n "$(echo $targetDevices | grep $deviceName)" ]; then
 fi
 
 newTargetDevicesArray=$targetDevices
-newTargetDevicesArray+=($deviceName)
+newTargetDevicesArray+=("$deviceName")
 
 newTargetDevicesString="$(echo "targetDevices=("$(for dev in ${newTargetDevicesArray[@]}; do printf \""$dev"\"; printf ' ';done)")")"
 

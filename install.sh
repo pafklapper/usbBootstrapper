@@ -43,8 +43,8 @@ iface eth1 inet dhcp
 
 allow-hotplug wlan0
 iface wlan0 inet dhcp
-	wpa-ssid $WPASSID
-	wpa-psk $WPAPSK
+	wpa-ssid "$WPASSID"
+	wpa-psk "$WPAPSK"
 EOF
 systemctl reenable networking.service
 

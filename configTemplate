@@ -4,8 +4,8 @@
 TESTING=y
 
 # use wpa_passphrase [SSID] [PSK] to generate PSK
-WPASSID="[placeholder]"
-WPAPSK="[placeholder]"
+WPASSID='[placeholder]'
+WPAPSK='[placeholder]'
 
 TELEGRAMTOKEN=""
 
