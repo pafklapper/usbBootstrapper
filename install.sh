@@ -17,7 +17,7 @@ unzip rtl8723bs-SHRT.zip -d /tmp/
 cd /tmp/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833
 
  make 
- make install                          
+ make install
 
 #broadcom
 cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/
@@ -32,7 +32,7 @@ modprobe -r brcmfmac; modprobe brcmfmac
 systemctl restart networking
 }
 
-if [ "$1" = "drivers" ]; then echo "installing drivers!" && installDrivers; fi
+if [ "$1" = "drivers" ]; then echo "installing drivers!" && installDrivers; exit; fi
 
 
 if [ ! -f $confFile ]; then
