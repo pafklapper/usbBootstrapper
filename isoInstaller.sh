@@ -124,10 +124,10 @@ fi
 
 #check for HOSTHDD
 if [ ! -b $HOSTHDD ]; then
-	#logp fatal "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+	logp fatal "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
 
-	echo testing: no memory block fail
-	logp warning "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+	#echo testing: no memory block fail
+	#logp warning "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
 fi
 
 while :;
@@ -144,7 +144,7 @@ do
 		sync
 		logp info "Installatie succesvol! druk op een toets om door te gaan."
 		logp notify "Installatie voor host VAR? afgerond!"
-		read && logp warning "De computer herstart in vijf seconden!.. " && sleep 5 && reboot
+		read && logp warning "De computer sluit over vijf seconden af! De computer zal de eerst volgende keer windows verder configureren " && sleep 5 && poweroff
 	else
 		logp warning "Er is iets fout gegaan! Systeem zal downloaden opnieuw proberen .. "
 	fi

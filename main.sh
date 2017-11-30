@@ -45,7 +45,6 @@ isHostTargetDevice()
 
 main()
 {
-
 #hack: some shitty/acer laptops start of sideways for some mysterious reason
 echo 1> /sys/class/graphics/fbcon/rotate_all
 
