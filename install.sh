@@ -53,7 +53,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # debian specific!
 case "$(grep -e "^NAME=" /etc/os-release | cut -f2 -d= |  tr -cd '[:alnum:] [:space:]')" in
-	"Debian GNU/Linux")
+	Debian GNU/Linux)
 
 	apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap
 
