@@ -19,4 +19,4 @@ logFile=/root/winUsbBootstrapper.log
 installationDirectory=
 
 # this var will be populated by script
-targetDevices=()
+targetDevices=("Aspire SW3-013" "One S1003")
