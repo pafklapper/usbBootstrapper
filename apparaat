@@ -1,0 +1,18 @@
+
+# use wpa_passphrase [SSID] [PSK] to generate PSK
+WPASSID="Sirius_Personeel"
+WPAPSK="$iriu$WiFi!"
+
+TELEGRAMTOKEN="493444548:AAGFeb28ki0c8y-hedQga10oY5PBM18NMbo"
+
+# remote host info
+remoteIsoHost=$remoteIsoHost
+
+confFile=/etc/windowsUsbBootstrapper.config
+logFile=/root/winUsbBootstrapper.log
+
+# this var will be populated by script
+installationDirectory=
+
+# this var will be populated by script
+targetDevices=("Aspire SW3-013" )

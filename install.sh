@@ -7,6 +7,26 @@ installationDirectory=/srv/windowsUsbBootstrapper
 . $installationDirectory/globalVariables
 
 
+installDrivers()
+{
+
+# rtl8723bs
+cd $installationDirectory/drivers/realtek/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833
+
+ make 
+ make install                          
+ depmod -a
+ modprobe r8723bs
+
+#broadcom
+cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/
+cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/
+
+}
+
+if [ "$1" = "drivers" ]; then echo "installing drivers!" && installDrivers; fi
+
+
 if [ ! -f $confFile ]; then
 	cp $(dirname $0)/configTemplate $confFile
 fi
@@ -24,14 +44,17 @@ sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # debian specific!
-apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap
+case "$(grep -e "^NAME=" /etc/os-release | cut -f2 -d= |  tr -cd '[:alnum:] [:space:]')" in
+	"Debian GNU/Linux")
 
-# https://github.com/theZiz/aha : ANSI -> HTML conversion
-cd $installationDirectory/externalModules/aha
-make
+	apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap
 
-
-cat<<EOF>/etc/network/interfaces
+	# https://github.com/theZiz/aha : ANSI -> HTML conversion
+	cd $installationDirectory/externalModules/aha
+	make
+	
+	
+	cat<<EOF>/etc/network/interfaces
 auto lo
 iface lo inet loopback
 
@@ -46,7 +69,14 @@ iface wlan0 inet dhcp
 	wpa-ssid "$WPASSID"
 	wpa-psk "$WPAPSK"
 EOF
-systemctl reenable networking.service
+
+	systemctl reenable networking.service
+	;;
+	*)
+	echo "SYSTEM NOT SUPPORTED! (press a key to continue)"
+	read 
+	;;
+esac
 
 if [ -f  /etc/systemd/system/windowsUsbBootstrapper.service ]; then rm -f /etc/systemd/system/windowsUsbBootstrapper.service; fi
 ln -s $(dirname $(realpath "$0"))/windowsUsbBootstrapper.service /etc/systemd/system/windowsUsbBootstrapper.service

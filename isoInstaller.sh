@@ -63,9 +63,12 @@ while read -r candidateIp; do
 	fi
 done <<< "$ipSet"
 
-logp warning "IP adres kon niet automatisch verkregen worden!"
-return 1
-
+if [ $? -eq 0 ]; then
+	return 0
+else
+	logp warning "IP adres kon niet automatisch verkregen worden!"
+	return 1
+fi
 
 #	for i in $(seq 0 255); do
 #		candidateIp="$currentNet.$i"

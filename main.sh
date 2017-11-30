@@ -45,6 +45,10 @@ isHostTargetDevice()
 
 main()
 {
+
+#hack: some shitty/acer laptops start of sideways for some mysterious reason
+echo 1> /sys/class/graphics/fbcon/rotate_all
+
 # wait for systemd to finish printing bootmessages
 sleep 2 && clear && printBanner
 
@@ -82,6 +86,7 @@ if [ $isError -gt 0 ]; then
 	logp fatal "Er is iets verschrikkelijk fout gegaan! :("
 fi
 }
+
 
 initConstants
 initVars
