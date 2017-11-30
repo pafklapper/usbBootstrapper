@@ -52,8 +52,7 @@ sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # debian specific!
-case "$(grep -e "^NAME=" /etc/os-release | cut -f2 -d= |  tr -cd '[:alnum:] [:space:]')" in
-	Debian GNU/Linux)
+if [ -n "$(grep -i debian /etc/os-release)" ]; then
 
 	apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap
 
@@ -79,12 +78,10 @@ iface wlan0 inet dhcp
 EOF
 
 	systemctl reenable networking.service
-	;;
-	*)
+else
 	echo "SYSTEM NOT SUPPORTED! (press a key to continue)"
 	read 
-	;;
-esac
+fi
 
 if [ -f  /etc/systemd/system/windowsUsbBootstrapper.service ]; then rm -f /etc/systemd/system/windowsUsbBootstrapper.service; fi
 ln -s $(dirname $(realpath "$0"))/windowsUsbBootstrapper.service /etc/systemd/system/windowsUsbBootstrapper.service
