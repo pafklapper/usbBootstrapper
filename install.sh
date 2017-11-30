@@ -11,17 +11,25 @@ installDrivers()
 {
 
 # rtl8723bs
-cd $installationDirectory/drivers/realtek/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833
+cd $installationDirectory/drivers/realtek/
+
+unzip rtl8723bs-SHRT.zip -d /tmp/
+cd /tmp/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833
 
  make 
  make install                          
- depmod -a
- modprobe r8723bs
 
 #broadcom
 cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/
 cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/
 
+
+
+depmod -a
+modprobe -r r8723bs; modprobe r8723bs
+modprobe -r brcmfmac; modprobe brcmfmac
+
+systemctl restart networking
 }
 
 if [ "$1" = "drivers" ]; then echo "installing drivers!" && installDrivers; fi
