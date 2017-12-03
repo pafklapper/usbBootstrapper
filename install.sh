@@ -54,7 +54,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 # debian specific!
 if [ -n "$(grep -i debian /etc/os-release)" ]; then
 
-	apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap
+	apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip
 
 	# https://github.com/theZiz/aha : ANSI -> HTML conversion
 	cd $installationDirectory/externalModules/aha
@@ -80,7 +80,7 @@ EOF
 	systemctl reenable networking.service
 elif [ -n "$(grep -i archlinux /etc/os-release)" ]; then
 
-	pacman --noconfirm -S install curl wget wpasupplicant xz-utils pv dmidecode gcc nmap
+	pacman --noconfirm -S install curl wget wpasupplicant xz-utils pv dmidecode gcc nmap unzip
 
 	# https://github.com/theZiz/aha : ANSI -> HTML conversion
 	cd $installationDirectory/externalModules/aha
