@@ -88,7 +88,7 @@ else
 	echo "SYSTEM NOT SUPPORTED! (press a key to continue)"
 	read 
 fi
-
+echo aa
 if [ -f  /etc/systemd/system/windowsUsbBootstrapper.service ]; then rm -f /etc/systemd/system/windowsUsbBootstrapper.service; fi
 ln -s $(dirname $(realpath "$0"))/windowsUsbBootstrapper.service /etc/systemd/system/windowsUsbBootstrapper.service
 
