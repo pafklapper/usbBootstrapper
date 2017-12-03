@@ -53,7 +53,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # debian specific!
 if [ -n "$(grep -i debian /etc/os-release)" ]; then
-
+	echo "Installing for Debian" && sleep 1
 	apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip
 
 	# https://github.com/theZiz/aha : ANSI -> HTML conversion
@@ -79,6 +79,7 @@ EOF
 
 	systemctl reenable networking.service
 elif [ -n "$(grep -i archlinux /etc/os-release)" ]; then
+	echo "Installing for Arch linux" && sleep 1
 
 	pacman --noconfirm -S install curl wget wpa_supplicant pv dmidecode gcc nmap unzip
 
