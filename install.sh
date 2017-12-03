@@ -78,19 +78,20 @@ iface wlan0 inet dhcp
 EOF
 
 	systemctl reenable networking.service
+	systemctl disable getty@tty0.service
 elif [ -n "$(grep -i archlinux /etc/os-release)" ]; then
 	echo "Installing for Arch linux" && sleep 1
 
 	pacman --noconfirm -S install curl wget wpa_supplicant pv dmidecode gcc nmap unzip
 
 	systemctl reenable dhcpcd@eth0.service
+	systemctl disable getty@tty1.service
 else
 	echo "SYSTEM NOT SUPPORTED! (press a key to continue)"
 	read 
 fi
-echo aa
+
 if [ -f  /etc/systemd/system/windowsUsbBootstrapper.service ]; then rm -f /etc/systemd/system/windowsUsbBootstrapper.service; fi
 ln -s $(dirname $(realpath "$0"))/windowsUsbBootstrapper.service /etc/systemd/system/windowsUsbBootstrapper.service
 
 systemctl enable windowsUsbBootstrapper.service
-systemctl disable getty@tty0.service
