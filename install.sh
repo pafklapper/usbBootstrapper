@@ -51,17 +51,15 @@ sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text nomodese
 sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
-# debian specific!
-if [ -n "$(grep -i debian /etc/os-release)" ]; then
-	echo "Installing for Debian" && sleep 1
-	apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip
+echo "Installing for Debian" && sleep 1
+apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip
 
-	# https://github.com/theZiz/aha : ANSI -> HTML conversion
-	cd $installationDirectory/externalModules/aha
-	make
-	
-	
-	cat<<EOF>/etc/network/interfaces
+# https://github.com/theZiz/aha : ANSI -> HTML conversion
+cd $installationDirectory/externalModules/aha
+make
+
+
+cat<<EOF>/etc/network/interfaces
 auto lo
 iface lo inet loopback
 
@@ -77,21 +75,10 @@ iface wlan0 inet dhcp
 	wpa-psk "$WPAPSK"
 EOF
 
-	systemctl reenable networking.service
-	systemctl disable getty@tty0.service
-elif [ -n "$(grep -i archlinux /etc/os-release)" ]; then
-	echo "Installing for Arch linux" && sleep 1
-
-	pacman --noconfirm -S install curl wget wpa_supplicant pv dmidecode gcc nmap unzip
-
-	systemctl reenable dhcpcd@eth0.service
-	systemctl disable getty@tty1.service
-else
-	echo "SYSTEM NOT SUPPORTED! (press a key to continue)"
-	read 
-fi
+systemctl reenable networking.service
 
 if [ -f  /etc/systemd/system/windowsUsbBootstrapper.service ]; then rm -f /etc/systemd/system/windowsUsbBootstrapper.service; fi
 ln -s $(dirname $(realpath "$0"))/windowsUsbBootstrapper.service /etc/systemd/system/windowsUsbBootstrapper.service
 
 systemctl enable windowsUsbBootstrapper.service
+systemctl disable getty@tty0.service
