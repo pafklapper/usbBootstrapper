@@ -1,6 +1,6 @@
 logp()
 {
-alias convertAnsiToHtml="$installationDirectory/externalModules/aha/aha"
+alias convertAnsiToHtml="$installationDirectory/aha"
 
 case "$1" in
 	info)
