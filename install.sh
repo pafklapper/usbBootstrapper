@@ -82,10 +82,6 @@ elif [ -n "$(grep -i archlinux /etc/os-release)" ]; then
 
 	pacman --noconfirm -S install curl wget wpa_supplicant pv dmidecode gcc nmap unzip
 
-	# https://github.com/theZiz/aha : ANSI -> HTML conversion
-	cd $installationDirectory/externalModules/aha
-	make
-
 	systemctl reenable dhcpcd@eth0.service
 else
 	echo "SYSTEM NOT SUPPORTED! (press a key to continue)"
