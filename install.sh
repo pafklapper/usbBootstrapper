@@ -78,6 +78,15 @@ iface wlan0 inet dhcp
 EOF
 
 	systemctl reenable networking.service
+elif [ -n "$(grep -i archlinux /etc/os-release)" ]; then
+
+	pacman --noconfirm -S install curl wget wpasupplicant xz-utils pv dmidecode gcc nmap
+
+	# https://github.com/theZiz/aha : ANSI -> HTML conversion
+	cd $installationDirectory/externalModules/aha
+	make
+
+	systemctl reenable dhcpcd@eth0.service
 else
 	echo "SYSTEM NOT SUPPORTED! (press a key to continue)"
 	read 
