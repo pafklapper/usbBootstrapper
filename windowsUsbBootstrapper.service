@@ -1,13 +1,13 @@
 [Unit]
 Description=Windows Installer
 After=getty.target
-Conflicts=getty@tty0.service
+Conflicts=getty@tty1.service
 
 [Service]
 #Type=oneshot
 ExecStart=/srv/windowsUsbBootstrapper/main.sh
 StandardInput=tty
-TTYPath=/dev/tty0
+TTYPath=/dev/tty1
 TTYReset=yes
 TTYVHangup=yes
 
