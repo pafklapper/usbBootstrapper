@@ -50,7 +50,7 @@ main()
 {
 #hack: some shitty/acer laptops start of sideways for some mysterious reason
 sysInfo="One S1003"
-if [ -n "$(echo $targetDevices | grep "$sysInfo")" ]; then
+if [ -n "$(echo "$targetDevices" | grep "$sysInfo")" ]; then
 	echo 1 > /sys/class/graphics/fbcon/rotate_all
 fi
 
