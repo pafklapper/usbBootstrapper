@@ -45,9 +45,9 @@ blkid|grep ntfs|while read ntfsLine; do
 			else
 				umount $windowsMountPoint
 			fi
-		else
-			logp fatal "NTFS blok herkenning mislukt!"
 		fi
+	else
+		logp fatal "Scriptfout in blokherkenning: variabele \$ntfsblk heeft invalide waarde $ntfsBlk "
 	fi
 done
 
