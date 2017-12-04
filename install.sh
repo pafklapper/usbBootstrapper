@@ -11,7 +11,7 @@ installDrivers()
 	# rtl8723bs
 	cd $installationDirectory/drivers/realtek/
 	
-	unzip -u rtl8723bs-SHRT.zip -d /tmp/ && cd /tmp/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833 && make  && make install || { echo "Compilation of rtl8723bs failed!"; exit 1; }
+	unzip -u rtl8723bs-SHRT.zip -d /tmp/ && cd /tmp/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833 && make  && make install || { echo "Compilation of rtl8723bs failed!"; read; }
 	
 	#broadcom
 
@@ -27,9 +27,7 @@ installDrivers()
 
 	apt update && apt -t testing -y install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
 
-	cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/ && cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/ || { echo "installation of brcmfmac43430a0 failed!"; exit 1; }
-	
-	
+	cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/ && cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/ || { echo "installation of brcmfmac43430a0 failed!"; read; }
 	
 	depmod -a
 	modprobe -r r8723bs; modprobe r8723bs
