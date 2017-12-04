@@ -12,7 +12,7 @@ nginxDefaultDirectory="/var/www/html"
 logFileSymlink="/var/www/html/index.html"
 logHtmlFile="/var/www/UsbBootstrapperLog.html"
 
-localIsoDirectory="$windowsMountPoint/windowsUsbBootstrapper"
+localIsoDirectory="$windowsMountPoint/usbBootstrapper"
 
 localIsoFile="$localIsoDirectory/WIN10.ISO.xz"
 localIsoChecksumFile="$localIsoDirectory/WIN10.ISO.xz.sha256"
