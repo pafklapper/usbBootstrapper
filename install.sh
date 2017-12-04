@@ -14,6 +14,11 @@ installDrivers()
 	unzip -u rtl8723bs-SHRT.zip -d /tmp/ && cd /tmp/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833 && make  && make install || { echo "Compilation of rtl8723bs failed!"; exit 1; }
 	
 	#broadcom
+
+	# add broadcom drivers from apt
+	sed '/main/s/$/ non-free contrib/' /etc/apt/sources.list
+	apt update && apt install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
+
 	cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/ && cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/ || { echo "installation of brcmfmac43430a0 failed!"; exit 1; }
 	
 	
@@ -44,7 +49,7 @@ sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Installing for Debian" && sleep 1
-apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools jq
+apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools jq linux-headers-686
 
 # https://github.com/theZiz/aha : ANSI -> HTML conversion
 cd $installationDirectory
