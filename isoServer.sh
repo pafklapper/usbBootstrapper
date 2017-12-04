@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# bash run options
+set -o pipefail
+
 initConstants()
 {
 confFile=/etc/usbBootstrapper.config

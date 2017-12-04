@@ -3,6 +3,9 @@
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 # semantic: download iso from server node, than xzcat it unto the laptops harddrive
 
+# bash run options
+set -o pipefail
+
 initConstants()
 {
 confFile=/etc/usbBootstrapper.config

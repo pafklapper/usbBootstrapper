@@ -2,6 +2,9 @@
 # written by pafklapper
 # released under Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License 
 
+# bash run options
+set -o pipefail
+
 initConstants()
 {
 logFile=/root/winUsbBootstrapper.log
