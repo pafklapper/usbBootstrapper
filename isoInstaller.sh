@@ -53,6 +53,9 @@ currentNet="$(echo $currentIP | cut -f 1,2,3 -d .)"
 
 ipSet="$(nmap -T5 --max-parallelism=100 -oG - -n -sn -sP $currentNet.0/24 | awk '/Up$/{print $2}')"
 
+echo TESTI:ipset=$ipSet
+read
+
 if [ $? -gt 0 ]; then
 	logp warning "IP adres kon niet automatisch verkregen worden!"
 	return 1
