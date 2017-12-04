@@ -41,7 +41,7 @@ waitForNetwork()
 {
 while :;
 do
-	timeout 5 ping -c1 8.8.8.8 1>/dev/null 2>/dev/null
+	timeout 5 curl -sff google.nl -o /dev/null 2>/dev/null
 	if [ $? -eq 0 ]; then
 		logp info "Het netwerk is toegankelijk!"
 		return 0
