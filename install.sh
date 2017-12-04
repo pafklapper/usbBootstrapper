@@ -82,3 +82,18 @@ ln -s $installationDirectory/usbBootstrapper.service /etc/systemd/system/usbBoot
 
 systemctl enable usbBootstrapper.service
 systemctl disable getty@tty0.service
+
+
+. $confFile
+
+if [ -z "$TELEGRAMTOKEN" ]; then
+	echo "Telegram not configured!"
+elif [ -z "$TELEGRAMCHATID" ]; then
+	curlTimeOut="10"
+	channelId="-$(curl --max-time $curlTimeOut "https://api.telegram.org/bot$TELEGRAMTOKEN/getUpdates" | jq '.' | grep '"id"' | head -n1 | grep -o '[0-9]\+')" 
+	if [ $? -eq 0 ] && [ -n "$channelId" ]; then
+		sed -i '/^TELEGRAMCHATID=/c\TELEGRAMCHATID="$channelId"' $confFile
+	else
+		echo "Could not get telegram chatid! please enter some text in chat on phone!"
+	fi
+fi

@@ -32,6 +32,7 @@ echo "TESTING! HARDDISK SPACE NOT ACCOUNTED FOR"
 			if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
 				return 0
 			else
+				echo TESTING!!! 
 				#logp fatal "Deze computer heeft niet genoeg ruimte om de Windows schijf te kunnen hosten. Probeer een andere computer!"
 			fi
 		else

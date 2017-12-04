@@ -8,6 +8,7 @@ WPASSID='[placeholder]'
 WPAPSK='[placeholder]'
 
 TELEGRAMTOKEN=""
+TELEGRAMCHATID=""
 
 # remote host info
 remoteIsoHost=
