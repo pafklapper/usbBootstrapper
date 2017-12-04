@@ -11,15 +11,10 @@ installDrivers()
 	# rtl8723bs
 	cd $installationDirectory/drivers/realtek/
 	
-	unzip rtl8723bs-SHRT.zip -d /tmp/
-	cd /tmp/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833
-	
-	 make 
-	 make install
+	unzip rtl8723bs-SHRT.zip -d /tmp/ && cd /tmp/rtl8723bs-b3def82d8cbd0e7011bfaa6b70cd74725863e833 && make  && make install || { echo "Compilation of rtl8723bs failed!"; exit 1; }
 	
 	#broadcom
-	cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/
-	cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/
+	cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/ && cp $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/ || { echo "installation of brcmfmac43430a0 failed!"; exit 1; }
 	
 	
 	
