@@ -41,7 +41,7 @@ if [ -n "$(grep TESTING=y $confFile)" ]; then
 	read -p "press a key +enter to continue!" && exit 1
 fi
 
-sed -i '/^installationDirectory=/c\installationDirectory=\"$(dirname $0)\"' $confFile
+sed -i '/^installationDirectory=/c\installationDirectory=\"$(realpath `dirname $0`)\"' $confFile
 source $confFile
 
 sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text nomodeset net.ifnames=0 biosdevname=0 rootdelay=5"' /etc/default/grub
