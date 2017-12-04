@@ -50,6 +50,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo "Installing for Debian" && sleep 1
 apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g
 
+echo $installationDirectory
+echo `ls $installationDirectory/externalModules/aha`
+read
+
 # https://github.com/theZiz/aha : ANSI -> HTML conversion
 cd $installationDirectory
 git submodule init
