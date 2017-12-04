@@ -19,3 +19,6 @@ localIsoChecksumFile="$localIsoDirectory/WIN10.ISO.xz.sha256"
 localIsoSizeFile="$localIsoDirectory/WIN10.ISO.xz.humansize"
 localIsoHostStatusUrl="$localIsoDirectory/status"
 localIsoHostId="$localIsoDirectory/id"
+
+#used as a hacky bash returnvalue
+retVal=

@@ -24,7 +24,6 @@ installationDirectory="$(dirname $(realpath "$0"))"
 
 # constants
 HOSTHDD=/dev/mmcblk1
-APROXSIZE="3700M"
 
 # ripped from: https://www.linuxjournal.com/content/validating-ip-address-bash-script
 function isIpValid()
@@ -127,12 +126,14 @@ else
 	logp fatal "IP adress kon niet worden verkregen!"
 fi
 
-#check for HOSTHDD
-if [ ! -b $HOSTHDD ]; then
-	logp fatal "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+# set hostHDD
+hostHDD="$(blkid | grep mmc | grep -v "p[0-9]" |cut -f1 -d: )"
+
+if [ ! -b $hostHDD ]; then
+	logp fatal "De hardeschijf kon niet worden gevonden! : $hostHDD"
 
 	#echo TESTING! no memory block fail
-	#logp warning "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+	#logp warning "De hardeschijf kon niet worden gevonden! : $hostHDD"
 fi
 
 while :;
@@ -140,7 +141,7 @@ do
 	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $remoteIsoHost ..."
 
 	remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
-	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd conv=sparse of=$HOSTHDD
+	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd conv=sparse of=$hostHDD
 	#echo TESTING! output to /dev/zero
 	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
 

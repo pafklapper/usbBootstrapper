@@ -48,9 +48,9 @@ isHostTargetDevice()
 
 main()
 {
-#hack: some shitty/acer laptops start of sideways for some mysterious reason
-sysInfo="One S1003"
-if [ -n "$(echo "$targetDevices" | grep "$sysInfo")" ]; then
+#hack: some shitty/acer laptops like S1003 start of sideways for some mysterious reason
+sysInfo="$(dmidecode | grep -A3 '^System Information')"
+if [ -n "$(echo $sysInfo | grep "S1003")" ]; then
 	echo 1 > /sys/class/graphics/fbcon/rotate_all
 fi
 
