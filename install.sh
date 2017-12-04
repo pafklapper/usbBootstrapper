@@ -31,7 +31,6 @@ installDrivers()
 }
 if [ "$1" = "drivers" ]; then echo "installing drivers!" && installDrivers; exit; fi
 
-
 if [ ! -f $confFile ]; then
 	cp $(dirname $0)/configTemplate $confFile
 fi
@@ -52,6 +51,9 @@ echo "Installing for Debian" && sleep 1
 apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g
 
 # https://github.com/theZiz/aha : ANSI -> HTML conversion
+cd $installationDirectory
+git submodule init
+git submodule update
 cd $installationDirectory/externalModules/aha
 make
 
