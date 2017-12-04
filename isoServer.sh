@@ -26,7 +26,7 @@ blkid|grep ntfs|while read ntfsLine; do
 		mkdir -p $windowsMountPoint
 		mount $ntfsBlk $windowsMountPoint
 
-		if [ $? -gt 0 ] && [ -n "$(mount | grep $ntfsBlk)" ]; then
+		if [ $? -gt 0 ]; then
 			logp warning "Er trad een fout op bij het inladen van de hardeschijf! Poging tot reparatie ..."
 			umount -f $ntfsBlk
 			ntfsfix -b -d $ntfsBlk
