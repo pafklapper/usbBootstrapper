@@ -26,6 +26,8 @@ blkid|grep ntfs|while read ntfsLine; do
 		mkdir -p $windowsMountPoint
 		mount $ntfsBlk $windowsMountPoint
 
+		echo err=$?
+		read
 
 #echo "TESTING! HARDDISK SPACE NOT ACCOUNTED FOR"
 		if [ -d $windowsMountPoint/Windows ]; then
