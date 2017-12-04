@@ -20,9 +20,10 @@ installDrivers()
 		sed -i '/main/s/$/ non-free contrib/' /etc/apt/sources.list
 	fi
 
-	echo "APT::Default-Release "stable";" > /etc/apt/apt.conf.d/99defaultrelease
-	grep -ve "^#" /etc/apt/sources.list > /etc/apt/sources.list.d/stable.list
-	grep -ve "^#" /etc/apt/sources.list | sed 's/stretch/testing/g'> /etc/apt/sources.list.d/testing.list
+	echo "APT::Default-Release "stable";" > /etc/apt/apt.conf.d/99defaultrelease && \
+	grep -ve "^#" /etc/apt/sources.list > /etc/apt/sources.list.d/stable.list && \
+	grep -ve "^#" /etc/apt/sources.list | sed 's/stretch/testing/g'> /etc/apt/sources.list.d/testing.list && \
+	mv /etc/apt/sources.list /etc/apt/sources.list.bak
 
 	apt update && apt -t testing -y install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
 
