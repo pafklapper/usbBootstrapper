@@ -3,7 +3,7 @@
 
 confFile=/etc/usbBootstrapper.config
 
-installationDirectory=/srv/windowsUsbBootstrapper
+installationDirectory=/srv/usbBootstrapper
 . $installationDirectory/globalVariables
 
 installDrivers()

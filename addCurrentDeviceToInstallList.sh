@@ -1,7 +1,7 @@
 #!/bin/bash 
 # run dit script om de dmideocode informatie aan de installatielijst toe te voegen
 
-installationDirectory=/srv/windowsUsbBootstrapper
+installationDirectory=/srv/usbBootstrapper
 cd $installationDirectory
 
 confFile=/etc/usbBootstrapper.config
