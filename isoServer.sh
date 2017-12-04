@@ -181,24 +181,6 @@ trap finish INT TERM EXIT
 
 main()
 {
-if [ -z "$(dpkg -l | grep -i nginx)" ]; then
-	logp info "NGINX aan 't installeren..."
-	apt update && apt -y install nginx
-
-	if [ $? -gt 0 ]; then 
-		logp fatal "NGINX kon niet worden geïnstalleerd!"
-	fi
-fi
-
-if [ -z "$(dpkg -l | grep -i ntfs-3g)" ]; then
-	logp info "Hardeschijf driver aan 't installeren..."
-	apt update && apt -y install ntfs-3g
-
-	if [ $? -gt 0 ]; then 
-		logp fatal "Hardeschijfdriver kon niet worden geïnstalleerd!"
-	fi
-fi
-
 logp info  "Klaarmaken NGINX..."
 if [ ! -d $nginxDefaultDirectory ]; then
 		logp fatal "NGINX standaardfolder is niet aanwezig!"

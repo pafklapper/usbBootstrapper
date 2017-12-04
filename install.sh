@@ -49,7 +49,7 @@ sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Installing for Debian" && sleep 1
-apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip
+apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g
 
 # https://github.com/theZiz/aha : ANSI -> HTML conversion
 cd $installationDirectory/externalModules/aha
