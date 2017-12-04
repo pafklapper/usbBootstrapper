@@ -140,7 +140,7 @@ do
 	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $remoteIsoHost ..."
 
 	remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
-	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=$HOSTHDD
+	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd conv=sparse of=$HOSTHDD
 	#echo TESTING! output to /dev/zero
 	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
 
