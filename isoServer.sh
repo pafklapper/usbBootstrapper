@@ -26,11 +26,12 @@ blkid|grep ntfs|while read ntfsLine; do
 		mkdir -p $windowsMountPoint
 		mount $ntfsBlk $windowsMountPoint
 
+
+echo "TESTING! HARDDISK SPACE NOT ACCOUNTED FOR"
 		if [ -d $windowsMountPoint/Windows ]; then
 			if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
 				return 0
 			else
-				echo "TESTING! HARDDISK SPACE NOT ACCOUNTED FOR"
 				#logp fatal "Deze computer heeft niet genoeg ruimte om de Windows schijf te kunnen hosten. Probeer een andere computer!"
 			fi
 		else
@@ -153,6 +154,7 @@ serveIso()
 	currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
 
 	logp info "Het systeem is actief @ $currentIP!"
+	logp notify "Server active @ $currentIP"
 	logp warning "Gebruik de stroomknop op de pc om het systeem af te sluiten!"
 
 	while :; do

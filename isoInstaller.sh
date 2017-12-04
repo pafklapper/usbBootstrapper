@@ -115,6 +115,8 @@ done
 
 main()
 {
+currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
+logp notify "Client active @ $currentIP"
 
 # get or set IP 
 if getIpAutomatic; then
@@ -137,10 +139,10 @@ while :;
 do
 	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $remoteIsoHost ..."
 
-	remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
-	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=$HOSTHDD
-	#echo TESTING: out put to /dev/zero
-	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
+	#remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
+	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=$HOSTHDD
+	echo TESTING! output to /dev/zero
+	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
 
 	echo TESTING: error checking not working yet
 	if [ $? -eq 0 ]; then
