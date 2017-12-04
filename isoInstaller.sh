@@ -53,16 +53,13 @@ currentNet="$(echo $currentIP | cut -f 1,2,3 -d .)"
 
 ipSet="$(nmap -T5 --max-parallelism=100 -oG - -n -sn -sP $currentNet.0/24 | awk '/Up$/{print $2}')"
 
-echo TESTI:ipset=$ipSet
-read
-
 if [ $? -gt 0 ]; then
 	logp warning "IP adres kon niet automatisch verkregen worden!"
 	return 1
 fi
 
 while read -r candidateIp; do
-	if [ "$(curl -sff $candidateIp/id)" = "usbBootstrapper" ]; then
+	if [ "$(curl --max-time=2 -sff $candidateIp/id)" = "usbBootstrapper" ]; then
 		logp info "Moederschip gevonden op $candidateIp!"
 		remoteIsoHost=$candidateIp
 		return 0
