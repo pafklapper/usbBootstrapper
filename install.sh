@@ -41,7 +41,7 @@ if [ -n "$(grep TESTING=y $confFile)" ]; then
 	read -p "press a key +enter to continue!" && exit 1
 fi
 
-sed -i '/^installationDirectory=/c\installationDirectory=\"$(realpath `dirname $0`)\"' $confFile
+sed -i "/^installationDirectory=/c\installationDirectory=\"$(realpath `dirname $0`)\"" $confFile
 source $confFile
 
 sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text nomodeset net.ifnames=0 biosdevname=0 rootdelay=5"' /etc/default/grub
@@ -49,7 +49,7 @@ sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Installing for Debian" && sleep 1
-apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools
+apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools jq
 
 # https://github.com/theZiz/aha : ANSI -> HTML conversion
 cd $installationDirectory
@@ -94,7 +94,7 @@ elif [ -z "$TELEGRAMCHATID" ]; then
 	echo chanid=$channelId
 	read
 	if [ $? -eq 0 ] && [ -n "$channelId" ]; then
-		sed -i '/^TELEGRAMCHATID=/c\TELEGRAMCHATID="$channelId"' $confFile
+		sed -i "/^TELEGRAMCHATID=/c\TELEGRAMCHATID=\"$channelId\"" $confFile
 	else
 		echo "Could not get telegram chatid! please enter some text in chat on phone!"
 	fi
