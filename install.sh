@@ -79,7 +79,7 @@ EOF
 
 systemctl reenable networking.service
 
-if [ -f  /etc/systemd/system/usbBootstrapper.service ]; then rm -f /etc/systemd/system/usbBootstrapper.service; fi
+if [ -L /etc/systemd/system/usbBootstrapper.service ]; then rm -f /etc/systemd/system/usbBootstrapper.service; fi
 ln -s $installationDirectory/usbBootstrapper.service /etc/systemd/system/usbBootstrapper.service
 
 systemctl enable usbBootstrapper.service
