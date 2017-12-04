@@ -19,7 +19,12 @@ installDrivers()
 	if [ ! "$(grep contrib /etc/apt/sources.list | wc -l)" -gt 2 ] ; then
 		sed -i '/main/s/$/ non-free contrib/' /etc/apt/sources.list
 	fi
-	apt update && apt -y install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
+
+	echo "APT::Default-Release "stable";" > /etc/apt/apt.conf.d/99defaultrelease
+	grep -ve "^#" /etc/apt/sources.list > /etc/apt/sources.list.d/stable.list
+	grep -ve "^#" /etc/apt/sources.list | sed 's/stretch/testing/g'> /etc/apt/sources.list.d/testing.list
+
+	apt update && apt -t testing -y install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
 
 	cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/ && cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/ || { echo "installation of brcmfmac43430a0 failed!"; exit 1; }
 	
