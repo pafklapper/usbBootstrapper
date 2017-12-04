@@ -129,10 +129,10 @@ fi
 
 #check for HOSTHDD
 if [ ! -b $HOSTHDD ]; then
-	#logp fatal "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+	logp fatal "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
 
-	echo TESTING! no memory block fail
-	logp warning "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+	#echo TESTING! no memory block fail
+	#logp warning "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
 fi
 
 while :;
@@ -140,14 +140,14 @@ do
 	logp info "Begonnen met kopieren van geprepareerde schijf vanaf  $remoteIsoHost ..."
 
 	remoteIsoSize="$(curl $remoteIsoSizeUrl 2>/dev/null)"
-	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=$HOSTHDD
-	echo TESTING! output to /dev/zero
-	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
+	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=$HOSTHDD
+	#echo TESTING! output to /dev/zero
+	#wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
 
 	if [ $? -eq 0 ]; then
 		sync
 		logp info "Installatie succesvol! druk op een toets om door te gaan."
-		logp notify "Installatie voor host VAR? afgerond!"
+		logp notify "Installatie voor client $currentIP afgerond!"
 		read && logp warning "De computer sluit over vijf seconden af! De computer zal de eerst volgende keer windows verder configureren " && sleep 5 && poweroff
 	else
 		logp warning "Er is iets fout gegaan! Systeem zal downloaden opnieuw proberen .. "

@@ -27,13 +27,12 @@ blkid|grep ntfs|while read ntfsLine; do
 		mount $ntfsBlk $windowsMountPoint
 
 
-echo "TESTING! HARDDISK SPACE NOT ACCOUNTED FOR"
+#echo "TESTING! HARDDISK SPACE NOT ACCOUNTED FOR"
 		if [ -d $windowsMountPoint/Windows ]; then
 			if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
 				return 0
 			else
-				echo TESTING!!! 
-				#logp fatal "Deze computer heeft niet genoeg ruimte om de Windows schijf te kunnen hosten. Probeer een andere computer!"
+				logp fatal "Deze computer heeft niet genoeg ruimte om de Windows schijf te kunnen hosten. Probeer een andere computer!"
 			fi
 		else
 			umount $windowsMountPoint
