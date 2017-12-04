@@ -24,7 +24,7 @@ blkid|grep ntfs|while read ntfsLine; do
 	ntfsBlk="$(echo $ntfsLine|cut -d: -f1)"
 	if [ -b $ntfsBlk ]; then
 		mkdir -p $windowsMountPoint
-		mount $ntfsBlk $windowsMountPoint
+		mount -o remove_hiberfile $ntfsBlk $windowsMountPoint
 
 		if [ $? -gt 0 ]; then
 			logp warning "Er trad een fout op bij het inladen van de hardeschijf! Poging tot reparatie ..."
