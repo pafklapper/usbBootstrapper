@@ -1,5 +1,5 @@
 [Unit]
-Description=USB Bootstrapper Pack
+Description=USB Bootstrapper
 After=getty.target
 Conflicts=getty@tty1.service
 

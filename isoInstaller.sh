@@ -129,6 +129,9 @@ fi
 # set hostHDD
 hostHDD="$(blkid | grep mmc | grep -v "p[0-9]" |cut -f1 -d: )"
 
+echo hostHDD=$hostHDD
+read
+
 if [ ! -b $hostHDD ]; then
 	logp fatal "De hardeschijf kon niet worden gevonden! : $hostHDD"
 

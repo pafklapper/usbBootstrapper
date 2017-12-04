@@ -56,7 +56,7 @@ fi
 
 
 # wait for systemd to finish printing bootmessages
-sleep 5 && clear && printBanner
+sleep 2 && clear && printBanner
 
 logp beginsection
 logp info  "wachten op de netwerkverbinding... " && waitForNetwork
