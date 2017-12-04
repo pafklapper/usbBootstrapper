@@ -25,7 +25,7 @@ case "$1" in
 	;;
 	notify)
 		# as ripped from: https://www.forsomedefinition.com/automation/creating-telegram-bot-notifications/
-		if [ -n "$TELEGRAMCHATID"] && [ -n "$TELEGRAMTOKEN" ]; then
+		if [ -n "$TELEGRAMCHATID" ] && [ -n "$TELEGRAMTOKEN" ]; then
 			local curlTimeOut="10"
 			local URL="https://api.telegram.org/bot$TELEGRAMTOKEN/sendMessage"
 			local TEXT="$2"

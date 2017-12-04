@@ -91,8 +91,6 @@ if [ -z "$TELEGRAMTOKEN" ]; then
 elif [ -z "$TELEGRAMCHATID" ]; then
 	curlTimeOut="10"
 	channelId="-$(curl --max-time $curlTimeOut "https://api.telegram.org/bot$TELEGRAMTOKEN/getUpdates" | jq '.' | grep '"id"' | head -n1 | grep -o '[0-9]\+')" 
-	echo chanid=$channelId
-	read
 	if [ $? -eq 0 ] && [ -n "$channelId" ]; then
 		sed -i "/^TELEGRAMCHATID=/c\TELEGRAMCHATID=\"$channelId\"" $confFile
 	else
