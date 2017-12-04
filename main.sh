@@ -52,7 +52,7 @@ main()
 echo 1> /sys/class/graphics/fbcon/rotate_all
 
 # wait for systemd to finish printing bootmessages
-sleep 2 && clear && printBanner
+sleep 5 && clear && printBanner
 
 logp beginsection
 logp info  "wachten op de netwerkverbinding... " && waitForNetwork
