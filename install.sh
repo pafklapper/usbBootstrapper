@@ -74,8 +74,8 @@ EOF
 
 systemctl reenable networking.service
 
-if [ -f  /etc/systemd/system/windowsUsbBootstrapper.service ]; then rm -f /etc/systemd/system/windowsUsbBootstrapper.service; fi
-ln -s $(dirname $(realpath "$0"))/windowsUsbBootstrapper.service /etc/systemd/system/windowsUsbBootstrapper.service
+if [ -f  /etc/systemd/system/usbBootstrapper.service ]; then rm -f /etc/systemd/system/usbBootstrapper.service; fi
+ln -s $(dirname $(realpath "$0"))/usbBootstrapper.service /etc/systemd/system/usbBootstrapper.service
 
-systemctl enable windowsUsbBootstrapper.service
+systemctl enable usbBootstrapper.service
 systemctl disable getty@tty0.service
