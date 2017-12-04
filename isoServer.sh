@@ -147,9 +147,9 @@ serveIso()
 		logp fatal "De lokale webserver is niet online!"
 	fi
 
-	localIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
+	currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
 
-	logp info "Het systeem is actief op $localIP!"
+	logp info "Het systeem is actief @ $currentIP!"
 	logp warning "Gebruik de stroomknop op de pc om het systeem af te sluiten!"
 
 	while :; do
@@ -198,7 +198,8 @@ if mountWindowsHarddisk; then
 		echo usbBootstrapper > $localIsoHostId
 		rm -f $logFileSymlink 2>&1 >/dev/null
 		ln -s $logHtmlFile $logFileSymlink
-		logp info "De lokale webserver is online!"
+		currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
+		logp info "De lokale webserver is online @ $currentIP!"
 	fi
 
 
