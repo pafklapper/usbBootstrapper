@@ -54,6 +54,7 @@ source $confFile
 
 sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text quiet nomodeset net.ifnames=0 biosdevname=0 rootdelay=9"' /etc/default/grub
 sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
+sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=15' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Installing for Debian" && sleep 1
