@@ -59,7 +59,7 @@ if [ $? -gt 0 ]; then
 fi
 
 while read -r candidateIp; do
-	if [ "$(curl --max-time=2 -sff $candidateIp/id)" = "usbBootstrapper" ]; then
+	if [ "$(curl --max-time 2 -sff $candidateIp/id)" = "usbBootstrapper" ]; then
 		logp info "Moederschip gevonden op $candidateIp!"
 		remoteIsoHost=$candidateIp
 		return 0
@@ -144,7 +144,6 @@ do
 	echo TESTING! output to /dev/zero
 	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize | xz -T4 -d | dd of=/dev/null
 
-	echo TESTING: error checking not working yet
 	if [ $? -eq 0 ]; then
 		sync
 		logp info "Installatie succesvol! druk op een toets om door te gaan."
