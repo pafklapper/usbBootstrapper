@@ -26,21 +26,28 @@ blkid|grep ntfs|while read ntfsLine; do
 		mkdir -p $windowsMountPoint
 		mount $ntfsBlk $windowsMountPoint
 
-		echo err=$?
-		read
-
-#echo "TESTING! HARDDISK SPACE NOT ACCOUNTED FOR"
-		if [ -d $windowsMountPoint/Windows ]; then
-			if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
-				return 0
+		if [ $? -gt 0 ] && [ -n "$(mount | grep $ntfsBlk)" ] then
+			logp warning "Er trad een fout op bij het inladen van de hardeschijf! Poging tot reparatie ..."
+			umount -f $ntfsBlk
+			ntfsfix -b -d $ntfsBlk
+			if  [ $? -eq 0 ]; then
+				logp info "Hardeschijf werd succesvol gerepareerd!"
 			else
-				logp fatal "Deze computer heeft niet genoeg ruimte om de Windows schijf te kunnen hosten. Probeer een andere computer!"
+				logp fatal "De hardeschijf van deze computer is kapot en kan niet gerepareerd worden. Probeer een andere computer!"
 			fi
 		else
-			umount $windowsMountPoint
+			if [ -d $windowsMountPoint/Windows ]; then
+				if [ $(df | grep $windowsMountPoint| awk '{ print +$4 }') -gt 10000000 ]; then
+					return 0
+				else
+					logp fatal "Deze computer heeft niet genoeg ruimte om de Windows schijf te kunnen hosten. Probeer een andere computer!"
+				fi
+			else
+				umount $windowsMountPoint
+			fi
+		else
+			logp fatal "NTFS blok herkenning mislukt!"
 		fi
-	else
-		logp fatal "NTFS blok herkenning mislukt!"
 	fi
 done
 
