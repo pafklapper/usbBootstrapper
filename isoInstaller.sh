@@ -132,10 +132,10 @@ fi
 
 #check for HOSTHDD
 if [ ! -b $HOSTHDD ]; then
-	logp fatal "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+	#logp fatal "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
 
-	#echo testing: no memory block fail
-	#logp warning "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
+	echo TESTING! no memory block fail
+	logp warning "De hardeschijf kon niet worden gevonden! : $HOSTHDD"
 fi
 
 while :;
