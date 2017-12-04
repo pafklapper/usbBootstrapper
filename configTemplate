@@ -12,7 +12,7 @@ TELEGRAMTOKEN=""
 # remote host info
 remoteIsoHost=
 
-confFile=/etc/windowsUsbBootstrapper.config
+confFile=/etc/usbBootstrapper.config
 logFile=/root/winUsbBootstrapper.log
 
 # this var will be populated by script

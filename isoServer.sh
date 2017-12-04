@@ -2,7 +2,7 @@
 
 initConstants()
 {
-confFile=/etc/windowsUsbBootstrapper.config
+confFile=/etc/usbBootstrapper.config
 
 logFile=/root/winUsbBootstrapper.log
 . $confFile

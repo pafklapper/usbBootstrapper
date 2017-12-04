@@ -1,7 +1,7 @@
 #!/bin/bash
 # use this script to install the suite
 
-confFile=/etc/windowsUsbBootstrapper.config
+confFile=/etc/usbBootstrapper.config
 
 installationDirectory=/srv/windowsUsbBootstrapper
 . $installationDirectory/globalVariables
