@@ -209,7 +209,7 @@ if mountWindowsHarddisk; then
 	
 	if systemctl start nginx; then
 		echo WAIT > $localIsoHostStatusUrl
-		echo usbBootstrapper > $localIsoHostId
+		echo usbBootstrapServer > $localIsoHostId
 		rm -f $logFileSymlink 2>&1 >/dev/null
 		ln -s $logHtmlFile $logFileSymlink
 		currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"

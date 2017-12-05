@@ -57,15 +57,18 @@ if [ $? -gt 0 ]; then
 	return 1
 fi
 
+
+found=0
 while read -r candidateIp; do
-	if [ "$(curl --max-time 2 -sff $candidateIp/id)" = "usbBootstrapper" ]; then
+	if [ "$(curl --max-time 2 -sff $candidateIp/id)" = "usbBootstrapServer" ]; then
 		logp info "Moederschip gevonden op $candidateIp!"
 		remoteIsoHost=$candidateIp
+		found=1
 		return 0
 	fi
 done <<< "$ipSet"
 
-if [ $? -eq 0 ]; then
+if [ $found = 1 ]; then
 	return 0
 else
 	logp warning "IP adres kon niet automatisch verkregen worden!"
@@ -127,7 +130,7 @@ else
 fi
 
 # set hostHDD
-hostHDD="$(blkid | grep mmc | grep -v "p[0-9]" |cut -f1 -d: )"
+hostHDD="$(lsblk -P -a -o NAME | grep mmc | cut -f2 -d= | sed 's/"//g' | grep -v -e "boot[0-9] -e rpm")"
 
 echo hostHDD=$hostHDD
 read

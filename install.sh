@@ -57,7 +57,7 @@ sed -i '/^GRUB_TIMEOUT=/c\GRUB_TIMEOUT=15' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Installing for Debian" && sleep 1
-apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools jq linux-headers-686
+apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools jq linux-headers-686 rfkill
 
 # https://github.com/theZiz/aha : ANSI -> HTML conversion
 cd $installationDirectory
