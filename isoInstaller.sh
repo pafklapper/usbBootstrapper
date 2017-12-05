@@ -130,7 +130,7 @@ else
 fi
 
 # set hostHDD
-hostHDD="$(lsblk -P -a -o NAME | grep mmc | cut -f2 -d= | sed 's/"//g' | grep -v -e "boot[0-9] -e rpm")"
+hostHDD="$(lsblk -no kname | grep mmc | grep -v -e "boot[0-9]" -e rpm)"
 
 echo hostHDD=$hostHDD
 read
