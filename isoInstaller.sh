@@ -130,10 +130,10 @@ else
 fi
 
 # set hostHDD
-hostHDD="$(lsblk -no kname | grep mmc | grep -v -e "p[0-9]" -e "boot[0-9]" -e rpm)"
+hostHDD="/dev/$(lsblk -no kname | grep mmc | grep -v -e "p[0-9]" -e "boot[0-9]" -e rpm)"
 
-echo hostHDD=$hostHDD
-read
+#echo hostHDD=$hostHDD
+#read
 
 if [ ! -b $hostHDD ]; then
 	logp fatal "De hardeschijf kon niet worden gevonden! : $hostHDD"
