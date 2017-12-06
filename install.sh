@@ -51,8 +51,10 @@ fi
 sed -i "/^installationDirectory=/c\installationDirectory=\"$(realpath `dirname $0`)\"" $confFile
 source $confFile
 
-echo "Installing for Debian" && sleep 1
 apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools jq linux-image-686 linux-headers-686 rfkill
+apt clean -y
+apt autoclean -y
+apt autoremove -y
 
 sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text quiet nomodeset net.ifnames=0 biosdevname=0 rootdelay=9"' /etc/default/grub
 sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
