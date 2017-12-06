@@ -129,6 +129,9 @@ else
 	logp fatal "IP adress kon niet worden verkregen!"
 fi
 
+# ip should be updated
+initVars
+
 # set hostHDD
 hostHDD="/dev/$(lsblk -no kname | grep mmc | grep -v -e "p[0-9]" -e "boot[0-9]" -e rpm)"
 
