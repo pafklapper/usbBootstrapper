@@ -129,8 +129,6 @@ rdpTemplateFile="$installationDirectory/Verbinding met schoolnetwerk.rdp"
 rdpTmpFile=`mktemp`
 cat "$rdpTemplateFile" > "$rdpTmpFile"
 
-cat "$rdpTemplateFile" | less
-
 index="$(cat $rdpIndexFile)"
 
 sed -i "/^username/c\username:s:sirius\\\brinkLaptop$index" $rdpTmpFile
