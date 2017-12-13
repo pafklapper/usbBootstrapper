@@ -126,21 +126,43 @@ do
 
 	if [ $? -eq 0 ]; then
 		sync
-		logp info "Installatie succesvol! druk op een toets om door te gaan."
-		logp notify "Installatie voor client $currentIP afgerond!"
-		read && logp warning "De computer sluit over vijf seconden af! De computer zal de eerst volgende keer windows verder configureren " && sleep 5 && poweroff
+		break
 	else
 		logp warning "Er is iets fout gegaan! Systeem zal downloaden opnieuw proberen .. "
 	fi
 done
 
+if [ ! $? -eq 0 ]; then exit 1; fi
+
 # here code should be include to update rdp login values to reflect remotelogins made available by Unilogic
 
 if $installationDirectory/externalModules/rdpIndex/Client.sh "$remoteIsoHost"; then
 	logp info "Succesvol RDP index verkregen!"
+	index="$(cat $rdpIndexFile)
+
+rdpTemplateFile="$installationDirectory/Verbinding met schoolnetwerk.rdp"
+rdpTmpFile=`mktemp`
+cat $rdpTemplateFile >> $rdpTmpFile
+
+sed -i "/^username:s/c\username:s:sirius\\brinkLaptop$index\" $rdpTmpFile 
+
+partprobe $hostHDD
+
+mkdir -p /mnt/windows
+
+mount "$hostHDD"p4 /mnt/windows 
+
+cp $rdpTmpFile "/mnt/windows/Users/de Brink/Desktop/Verbinding met Schoolnetwerk.rdp"
+
 else
 	logp warning "Kon RDP index niet verkrijgen!"
 fi
+
+efibootmgr -o 2001,0
+
+		logp info "Installatie succesvol! druk op een toets om door te gaan."
+		logp notify "Installatie voor client $currentIP afgerond!"
+		read && logp warning "De computer sluit over vijf seconden af! De computer zal de eerst volgende keer windows verder configureren " && sleep 5 && poweroff
 
 }
 
