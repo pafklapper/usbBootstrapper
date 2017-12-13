@@ -20,13 +20,20 @@ installDrivers()
 		sed -i '/main/s/$/ non-free contrib/' /etc/apt/sources.list
 	fi
 
-if [ ! -f /etc/apt/apt.conf.d/99defaultrelease ]; then
+if [ ! -f /etc/apt/apt.conf.d/99defaultrelease ] && [ -n "$(grep -i stretch /etc/os-release)" ]; then
 	echo "APT::Default-Release "stable";" > /etc/apt/apt.conf.d/99defaultrelease && \
 	grep -ve "^#" /etc/apt/sources.list > /etc/apt/sources.list.d/stable.list && \
 	grep -ve "^#" /etc/apt/sources.list | sed 's/stretch/testing/g'> /etc/apt/sources.list.d/testing.list && \
 	mv /etc/apt/sources.list /etc/apt/sources.list.bak
 fi
-	apt update && apt -t testing -y install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
+
+testingOpt="-t testing"
+if [ -n "$(grep -i buster /etc/os-release)" ]; then
+	# if on newest release of Debian, Buster, testing repo is not neccessary for drivers
+	testingOpt=""
+fi
+	apt update && apt $testingOpt -y install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
+	#apt $testingOpt upgrade -y && apt $testingOpt dist-upgrade -y 
 
 	cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/ && cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/ || { echo "installation of brcmfmac43430a0 failed!"; read; }
 	

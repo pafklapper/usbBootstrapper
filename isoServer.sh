@@ -99,7 +99,7 @@ logp info "Het systeem zal nu de geprepareerde Windows schijf downloaden..."
 for i in {0..2}; do
 	wget $remoteIsoUrl -q -O - | pv --size $remoteIsoSize |  dd of=$localIsoFile
 	if [ $? -eq 0 ]; then
-		logp info "De windows schijf is succesvol gedownload!"
+		logp info "De geprepareerde schijf is succesvol gedownload!"
 		sync
 		break
 	else
@@ -111,7 +111,7 @@ done
 if isIsoValid;then
 	# update size
 	echo $remoteIsoSize > $localIsoSizeFile
-	logp info "De windows schijf is gevalideerd!"
+	logp info "De geprepareerde schijf is gevalideerd!"
 else
 	rm -f $localIsoFile; rm -f $localIsoChecksum
 	logp fatal "De gedownloade schijf is corrupt!"
@@ -121,7 +121,7 @@ fi
 acquireIso()
 {
 if isIsoDownloaded && isIsoUptodate && isIsoValid; then
-	logp info "Uptodate en valide Windows ISO gevonden."
+	logp info "Uptodate en valide geprepareerde schijf gevonden."
 	return 0
 else
 	while :; do
@@ -131,20 +131,20 @@ else
 				if downloadIso; then
 					return 0
 				else
-					logp fatal "Windows ISO kon niet worden gedownload!"
+					logp fatal "Geprepareerde Windows-schijf kon niet worden gedownload!"
 				fi
 			;;
 			WAIT)
-				logp info "De externe host $remoteIsoHost is nog aan het opwarmen. Een moment geduld."
+				logp info "De schijfserver $remoteIsoHost is nog aan het opwarmen. Een moment geduld."
 				sleep 60
 			;;
 			*)
-				logp warning "De externe host $remoteIsoHost heeft onbekende status!"
+				logp warning "De schijfserver $remoteIsoHost heeft een onbekende status!"
 				sleep 60
 			;;
 		esac
 		else
-			logp fatal "De externe host $remoteIsoHost is offline! "
+			logp fatal "De schijfserver $remoteIsoHost is offline! "
 		fi
 
 	sleep 1
@@ -162,7 +162,7 @@ serveIso()
 
 	currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
 
-	logp info "Het systeem is actief @ $currentIP!"
+	logp info "Het systeem is actief op $currentIP!"
 	logp notify "Server active @ $currentIP"
 	logp warning "Gebruik de stroomknop op de pc om het systeem af te sluiten!"
 
@@ -195,17 +195,17 @@ trap finish INT TERM EXIT
 
 main()
 {
-logp info  "Klaarmaken NGINX..."
+logp info  "Klaarmaken webserver voor monitoring op afstand..."
 if [ ! -d $nginxDefaultDirectory ]; then
-		logp fatal "NGINX standaardfolder is niet aanwezig!"
+		logp fatal "Webserver standaardfolder is niet aanwezig!"
 	else
 		rm -rf $nginxDefaultDirectory
 fi
 
 if mountWindowsHarddisk; then
-	logp info "Windows installatie gevonden."
+	logp info "Bestaande Windows-installatie gevonden."
 
-	mkdir  -p $localIsoDirectory && ln -s $localIsoDirectory $nginxDefaultDirectory || logp fatal "Kon de lokale hostfolder niet aanmaken!"
+	mkdir  -p $localIsoDirectory && ln -s $localIsoDirectory $nginxDefaultDirectory || logp fatal "Kon geen folder aanmaken op de bestaande Windowsinstallatie!"
 	
 	if systemctl start nginx; then
 		echo WAIT > $localIsoHostStatusUrl
@@ -213,12 +213,12 @@ if mountWindowsHarddisk; then
 		rm -f $logFileSymlink 2>&1 >/dev/null
 		ln -s $logHtmlFile $logFileSymlink
 		currentIP="$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')"
-		logp info "De lokale webserver is online @ $currentIP!"
+		logp info "De lokale webserver is online op $currentIP!"
 	fi
 
 
 	if acquireIso; then
-		logp info "Klaar om ISO te hosten. Bezig met opzetten webserver..."
+		logp info "Klaar om geprepareerde schijf te hosten. Bezig met opzetten webserver..."
 		if serveIso; then
 			logp endsection
 			logp info "Het systeem zal nu worden afgesloten..."
@@ -227,10 +227,10 @@ if mountWindowsHarddisk; then
 			return 1
 		fi
 	else
-		logp fatal "ISO kon niet worden klaargezet!"
+		logp fatal "Geprepareerde schijf kon niet worden klaargezet!"
 	fi
 else
-	logp fatal "Windows partitie kon niet worden geopend!"
+	logp fatal "Bestaande Windows-installatie kon niet worden geopend!"
 fi
 }
 
