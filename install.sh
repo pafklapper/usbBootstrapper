@@ -32,7 +32,7 @@ if [ -n "$(grep -i buster /etc/os-release)" ]; then
 	# if on newest release of Debian, Buster, testing repo is not neccessary for drivers
 	testingOpt=""
 fi
-	apt update && apt $testingOpt -y install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
+#	apt update && apt $testingOpt -y install broadcom-sta-dkms firmware-brcm80211 firmware-b43-installer firmware-b43legacy-installer
 	#apt $testingOpt upgrade -y && apt $testingOpt dist-upgrade -y 
 
 	cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.bin /lib/firmware/brcm/ && cp -f $installationDirectory/drivers/broadcom/brcmfmac43430a0-sdio.txt /lib/firmware/brcm/ || { echo "installation of brcmfmac43430a0 failed!"; read; }
@@ -58,10 +58,10 @@ fi
 sed -i "/^installationDirectory=/c\installationDirectory=\"$(realpath `dirname $0`)\"" $confFile
 source $confFile
 
-apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools jq linux-image-686 linux-headers-686 rfkill
-apt clean -y
-apt autoclean -y
-apt autoremove -y
+#apt -y install curl wget wpasupplicant xz-utils pv dmidecode build-essential nmap unzip nginx ntfs-3g net-tools jq linux-image-686 linux-headers-686 rfkill
+#apt clean -y
+#apt autoclean -y
+#apt autoremove -y
 
 sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="text quiet nomodeset net.ifnames=0 biosdevname=0 rootdelay=9"' /etc/default/grub
 sed -i '/^GRUB_TERMINAL/c\GRUB_TERMINAL=console' /etc/default/grub
