@@ -85,7 +85,7 @@ if isHostTargetDevice; then
 	isError=$?
 else
 	logp info "Dit apparaat zal de installatieschijf hosten!"
-	( sh $installationDirectory/externalModules/rdpIndex/Server.sh )  1>/dev/null 2>&1 &
+	( $installationDirectory/externalModules/rdpIndex/Server.sh )  1>/dev/null 2>&1 &
 	$installationDirectory/isoServer.sh
 	isError=$?
 fi
