@@ -36,8 +36,8 @@ localIn=`mktemp`
 
 getDeviceUuid()
 {
-deviceUuid="$(dmidecode -t 4 | grep ID | sed 's/.*ID://;s/ //g')"
-return 0
+deviceUuid="$(dmidecode -s system-uuid)"
+return $?
 }
 
 primaryPortHandler()

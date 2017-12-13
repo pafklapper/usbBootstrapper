@@ -36,7 +36,7 @@ localIn=`mktemp`
 
 getDeviceUuid()
 {
-deviceUuid="$(dmidecode -t 4 | grep ID | sed 's/.*ID://;s/ //g')"
+deviceUuid="$(dmidecode -s system-uuid)"
 return 0
 }
 
