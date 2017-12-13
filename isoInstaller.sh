@@ -138,13 +138,15 @@ if [ ! $? -eq 0 ]; then exit 1; fi
 
 if $installationDirectory/externalModules/rdpIndex/Client.sh "$remoteIsoHost"; then
 	logp info "Succesvol RDP index verkregen!"
-	index="$(cat $rdpIndexFile)
+	index="$(cat $rdpIndexFile)"
 
 rdpTemplateFile="$installationDirectory/Verbinding met schoolnetwerk.rdp"
 rdpTmpFile=`mktemp`
 cat $rdpTemplateFile >> $rdpTmpFile
 
 sed -i "/^username:s/c\username:s:sirius\\brinkLaptop$index" $rdpTmpFile 
+
+if ! which partprobe; then apt -y install parted; fi
 
 partprobe $hostHDD
 
