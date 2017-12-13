@@ -20,5 +20,7 @@ localIsoSizeFile="$localIsoDirectory/WIN10.ISO.xz.humansize"
 localIsoHostStatusUrl="$localIsoDirectory/status"
 localIsoHostId="$localIsoDirectory/id"
 
+rdpIndexFile="/etc/usbBootStrapper.devindex"
+
 #used as a hacky bash returnvalue
 retVal=
