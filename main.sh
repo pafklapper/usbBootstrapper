@@ -69,8 +69,9 @@ if ! isGitRepoUptodate; then
 	$installationDirectory/install.sh
 	if [ $? -eq 0 ]; then
 		logp endsection
-		logp info "Installeren van updates gelukt. De computer start in vijf seconden opnieuw op!"
-		sleep 5 && reboot
+		logp info "Installeren van updates gelukt. De installatie wordt hervat!"
+		sleep 2
+		systemctl restart usbBootstrapper.service
 	else
 		logp fatal "De computer moet opnieuw opgestart worden!"
 	fi
