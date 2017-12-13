@@ -144,7 +144,7 @@ rdpTemplateFile="$installationDirectory/Verbinding met schoolnetwerk.rdp"
 rdpTmpFile=`mktemp`
 cat $rdpTemplateFile >> $rdpTmpFile
 
-sed -i "/^username:s/c\username:s:sirius\\brinkLaptop$index\" $rdpTmpFile 
+sed -i "/^username:s/c\username:s:sirius\\brinkLaptop$index" $rdpTmpFile 
 
 partprobe $hostHDD
 
