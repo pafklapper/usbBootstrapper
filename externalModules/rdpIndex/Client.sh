@@ -13,8 +13,8 @@ logFile=/root/winUsbBootstrapper.log
 initVars()
 {
 installationDirectory="$(dirname $(realpath "$0"))"
-/srv/usbBootstrapper/globalVariables
-/srv/usbBootstrapper/globalFunctions
+. /srv/usbBootstrapper/globalVariables
+. /srv/usbBootstrapper/globalFunctions
 }
 
 privKey="a3fb1bd7065721ab33505b24cc95021f"
