@@ -56,14 +56,11 @@ while read -r candidateIp; do
 	if [ "$(curl --max-time 2 -sff $candidateIp/id)" = "usbBootstrapServer" ]; then
 		logp info "Moederschip gevonden op $candidateIp!"
 		remoteIsoHost=$candidateIp
-		return 26
+		return 0
 	fi
 done <<< "$ipSet"
 
-echo bbb
-
 if [ $? -eq 26 ]; then
-	echo aaa
 	return 0
 else
 	logp warning "IP-adres kon niet automatisch verkregen worden!"
