@@ -135,6 +135,8 @@ sed -i "/^username/c\username:s:sirius\\\brinkLaptop$index" $rdpTmpFile
 
 partprobe $hostHDD
 
+umount /mnt/windows
+
 mkdir -p /mnt/windows
 
 ntfsfix $hostHDD
