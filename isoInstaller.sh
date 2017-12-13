@@ -60,6 +60,8 @@ while read -r candidateIp; do
 	fi
 done <<< "$ipSet"
 
+echo bbb
+
 if [ $? -eq 26 ]; then
 	echo aaa
 	return 0
