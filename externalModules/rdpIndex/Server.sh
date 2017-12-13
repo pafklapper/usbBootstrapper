@@ -16,7 +16,7 @@ set -o pipefail
 
 
 secondaryPortTimeOut=5
-dbFile=database
+dbFile=/etc/usbBootstrapper.devIndex
 uuidIndex=
 
 initConstants()
