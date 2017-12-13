@@ -132,13 +132,8 @@ cat "$rdpTemplateFile" > "$rdpTmpFile"
 cat "$rdpTemplateFile" | less
 
 index="$(cat $rdpIndexFile)"
-echo index=$index
-
-
 
 sed -i "/^username/c\username:s:sirius\\\brinkLaptop$index" $rdpTmpFile
-
-cat $rdpTmpFile | less
 
 partprobe $hostHDD
 
@@ -146,6 +141,10 @@ mkdir -p /mnt/windows
 
 mount "$hostHDD"p4 /mnt/windows 
 
+if [ $? -gt 0 ]; then
+hostHDD=/dev/mmcblk0
+mount "$hostHDD"p4 /mnt/windows 
+fi
 cat "$rdpTmpFile" > "/mnt/windows/Users/de Brink/Desktop/Verbinding met Schoolnetwerk.rdp"
 
 if [ -n "$(grep brinkLaptop $rdpTmpFile)" ]; then echo "Enrollment succesfull!"; fi
