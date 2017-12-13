@@ -54,6 +54,7 @@ if [ -n "$(echo $sysInfo | grep "S1003")" ]; then
 	echo 1 > /sys/class/graphics/fbcon/rotate_all
 fi
 
+efibootmgr -o 2001,0 1>/dev/null 2>&1
 
 # wait for systemd to finish printing bootmessages
 sleep 2 && clear && printBanner
