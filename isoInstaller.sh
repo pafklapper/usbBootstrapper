@@ -135,6 +135,13 @@ do
 done
 
 # here code should be include to update rdp login values to reflect remotelogins made available by Unilogic
+
+if $installationDirectory/externalModules/rdpIndex/Client.sh "$remoteIsoHost"; then
+	logp info "Succesvol RDP index verkregen!"
+else
+	logp warning "Kon RDP index niet verkrijgen!"
+fi
+
 }
 
 initConstants && initVars && main $@

@@ -13,10 +13,9 @@ logFile=/root/winUsbBootstrapper.log
 initVars()
 {
 installationDirectory="$(dirname $(realpath "$0"))"
-. $installationDirectory/globalVariables
-. $installationDirectory/globalFunctions
+/srv/usbBootstrapper/globalVariables
+/srv/usbBootstrapper/globalFunctions
 }
-
 
 privKey="a3fb1bd7065721ab33505b24cc95021f"
 pubKey="24f6b2776aa8af3165d47f2c79600f1c"
@@ -24,7 +23,7 @@ pubKey="24f6b2776aa8af3165d47f2c79600f1c"
 primaryPort=10420
 secondaryPort=10421
 
-rhost=127.0.0.1
+rhost="$1"
 
 retryTimes=12
 
@@ -122,4 +121,4 @@ done
 exit 1
 }
 
-initConstants && initVars && main $@
+initConstants && initVars &&  main $@
