@@ -96,6 +96,7 @@ if [ $isError -gt 0 ]; then
 fi
 }
 
+trap "kill 0" SIGINT TERM EXIT
 
 initConstants
 initVars
@@ -106,4 +107,3 @@ cat /dev/null > $logFile
 
 tee -a $logFile | main $@ | tee -a $logFile
 
-kill 0
