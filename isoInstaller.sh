@@ -61,6 +61,7 @@ while read -r candidateIp; do
 done <<< "$ipSet"
 
 if [ $? -eq 26 ]; then
+	echo aaa
 	return 0
 else
 	logp warning "IP-adres kon niet automatisch verkregen worden!"
