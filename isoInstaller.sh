@@ -142,9 +142,9 @@ if $installationDirectory/externalModules/rdpIndex/Client.sh "$remoteIsoHost"; t
 
 rdpTemplateFile="$installationDirectory/Verbinding met schoolnetwerk.rdp"
 rdpTmpFile=`mktemp`
-cat $rdpTemplateFile >> $rdpTmpFile
+cat "$rdpTemplateFile" > "$rdpTmpFile"
 
-sed -i "/^username:s/c\username:s:sirius\\brinkLaptop$index" $rdpTmpFile 
+sed -i "/^username/c\username:s:sirius\\\brinkLaptop$index" $rdpTmpFile 
 
 if ! which partprobe; then apt -y install parted; fi
 
@@ -154,7 +154,7 @@ mkdir -p /mnt/windows
 
 mount "$hostHDD"p4 /mnt/windows 
 
-cp $rdpTmpFile "/mnt/windows/Users/de Brink/Desktop/Verbinding met Schoolnetwerk.rdp"
+cat "$rdpTmpFile" > "/mnt/windows/Users/de Brink/Desktop/Verbinding met Schoolnetwerk.rdp"
 
 else
 	logp warning "Kon RDP index niet verkrijgen!"
