@@ -137,10 +137,12 @@ partprobe $hostHDD
 
 mkdir -p /mnt/windows
 
+ntfsfix $hostHDD
 mount -o remove_hiberfile "$hostHDD"p4 /mnt/windows 
 
 if [ $? -gt 0 ]; then
 hostHDD=/dev/mmcblk0
+ntfsfix $hostHDD
 mount -o remove_hiberfile "$hostHDD"p4 /mnt/windows 
 fi
 cat "$rdpTmpFile" > "/mnt/windows/Users/de Brink/Desktop/Verbinding met Schoolnetwerk.rdp"
